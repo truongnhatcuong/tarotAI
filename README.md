@@ -13,7 +13,7 @@ npm run verify:artwork
 npm run dev
 ```
 
-Mở http://127.0.0.1:3000 khi chạy development. `npm run build` tạo bản production; `npm run start` chạy bản đã build tại http://127.0.0.1:2222 để tránh trùng cổng development.
+Mở http://127.0.0.1:3000 khi chạy development. `npm run build` tạo bản production; `npm run start` lắng nghe trên `0.0.0.0:2222` để nhận kết nối bên ngoài khi triển khai VPS. Truy cập tại `http://<IP-VPS>:2222` hoặc http://127.0.0.1:2222 khi chạy local.
 
 ## Artwork Rider–Waite
 
