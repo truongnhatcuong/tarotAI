@@ -52,6 +52,7 @@ test('AI cancel and retry preserve the exact saved cards and show successful ana
       connections:'Các chủ đề khởi đầu, rèn luyện và hy vọng gợi những hướng suy ngẫm.',
       love:null,career:'Cân nhắc kỹ năng cần rèn luyện và bước tiếp theo.',finance:null,
       message:'Hãy gắn hy vọng về công việc với một bước rèn luyện cụ thể.',
+      attention:'Cần làm rõ kỹ năng và điều kiện thực hiện bước tiếp theo.',
       advice:'Chọn một hành động nhỏ phù hợp hoàn cảnh thực tế.',
     };
     await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({analysis,source:'ai'})});

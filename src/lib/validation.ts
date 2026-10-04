@@ -31,8 +31,9 @@ export const analysisSchema = z.object({
   overview: paragraph,
   cards: z.array(drawnSchema.extend({ interpretation: paragraph })).min(1).max(3),
   connections: paragraph, love: paragraph.nullable(), career: paragraph.nullable(), finance: paragraph.nullable(), advice: paragraph,
-  // Older saved readings do not have a separate message. New AI responses must.
+  // Older saved readings lack these sections. New AI responses require both.
   message: paragraph.optional(),
+  attention: paragraph.optional(),
 });
 export const readingSchema = requestSchema.safeExtend({
   id: z.string().uuid(), createdAt: z.string().datetime(), analysis: analysisSchema.nullable(), source: z.enum(['ai','reference']).nullable(),

@@ -41,7 +41,7 @@ test('history retains IDs, orientations and analysis while limiting to 30',()=>w
 }));
 test('AI history restores both older readings and new readings with a message',()=>withStorage(()=>{
   const older=reading();older.analysis=referenceAnalysis(older);older.source='ai';
-  const current=reading();current.analysis={...referenceAnalysis(current),message:'Kiểm tra nguồn lực và khả năng thực hiện trước khi bắt đầu.'};current.source='ai';
+  const current=reading();current.analysis={...referenceAnalysis(current),attention:'Làm rõ nguồn lực còn thiếu trước khi triển khai.',message:'Kiểm tra nguồn lực và khả năng thực hiện trước khi bắt đầu.'};current.source='ai';
   saveHistory([current,older]);
   assert.deepEqual(loadHistory(),[current,older]);
 }));

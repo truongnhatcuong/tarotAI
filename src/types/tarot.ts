@@ -17,6 +17,7 @@ export interface Analysis {
   overview: string; cards: CardInterpretation[]; connections: string;
   love: string | null; career: string | null; finance: string | null; advice: string;
   message?: string;
+  attention?: string;
 }
 export interface Reading extends ReadingRequest {
   id: string; createdAt: string; analysis: Analysis | null; source: 'ai' | 'reference' | null;

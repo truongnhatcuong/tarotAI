@@ -148,9 +148,16 @@ export function verifyAnalysis(
       "AI chưa đưa ra thông điệp cho câu hỏi của bạn. Hãy thử lại với các lá đã mở.",
       502,
     );
+  if (!analysis.attention)
+    throw new AIError(
+      "MISSING_ATTENTION",
+      "AI chưa nêu điều bạn cần chú ý trong câu hỏi này. Hãy thử lại với các lá đã mở.",
+      502,
+    );
   const prose = [
     analysis.overview,
     analysis.message,
+    analysis.attention,
     analysis.connections,
     analysis.advice,
     analysis.love,

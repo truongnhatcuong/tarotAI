@@ -19,7 +19,7 @@ function analysisFor(reading: Reading): Analysis {
     connections: 'Các biểu tượng gợi một góc nhìn để bạn cân nhắc.',
     love: reading.topic === 'love' ? 'Suy ngẫm về sự kết nối trong hoàn cảnh hiện tại.' : null,
     career: reading.topic === 'career' ? 'Cân nhắc một bước nhỏ trong công việc.' : null,
-    finance: null, message: 'Khởi đầu mới cần đi cùng việc rèn luyện và giữ hy vọng. Hãy chọn một bước phù hợp với hành trình bạn đang hỏi.', advice: 'Ghi lại một hành động nhỏ bạn có thể tự quyết định.',
+    finance: null, attention: 'Làm rõ điều còn thiếu trong hoàn cảnh hiện tại trước khi bắt đầu hướng mới.', message: 'Khởi đầu mới cần đi cùng việc rèn luyện và giữ hy vọng. Hãy chọn một bước phù hợp với hành trình bạn đang hỏi.', advice: 'Ghi lại một hành động nhỏ bạn có thể tự quyết định.',
   };
 }
 
@@ -72,6 +72,8 @@ for (const spread of SPREADS) {
     for (const card of analysis.cards) await expect(summary.getByText(card.interpretation, {exact:true})).toBeVisible();
     await expect(summary.getByRole('heading', {name:'Thông điệp dành cho bạn'})).toBeVisible();
     await expect(summary.getByText(analysis.message!, {exact:true})).toBeVisible();
+    await expect(summary.getByRole('heading', {name:'Điều bạn cần chú ý'})).toBeVisible();
+    await expect(summary.getByText(analysis.attention!, {exact:true})).toBeVisible();
     await expect(summary.getByRole('button', {name:'Diễn giải lại',exact:true})).toBeVisible();
     await expect(summary.getByRole('heading', {name:reading.cards.length === 1 ? 'Liên hệ với câu hỏi' : 'Liên kết giữa các lá'})).toBeVisible();
     await gallery.getByRole('button', {name:'Khám phá thông điệp'}).click();
