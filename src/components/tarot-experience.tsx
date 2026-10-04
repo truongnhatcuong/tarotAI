@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowUpRight, BookOpen, Check, Clock3, Moon, ShieldCheck, Sparkles, Sun } from 'lucide-react';
 import { getSpread } from '@/data/spreads';
 import { profileSchema, requestSchema } from '@/lib/validation';
+import { createReadingId } from '@/lib/reading-id';
 import { drawFromDeck, shuffledDeck } from '@/services/draw';
 import { loadHistory, loadProfile, saveProfile, saveHistory, forgetProfile } from '@/services/storage';
 import { requestAnalysis, referenceAnalysis } from '@/services/reading-client';
@@ -67,14 +68,14 @@ export function TarotExperience() {
     const next=[...draws,drawn];setDraws(next);
     if(next.length===spread.positions.length){
       const request=requestSchema.parse({profile:form.profile,question:form.question,topic:form.topic,spreadId:form.spreadId,cards:next});
-      updateReading({...request,id:crypto.randomUUID(),createdAt:new Date().toISOString(),analysis:null,source:null});
+      updateReading({...request,id:createReadingId(),createdAt:new Date().toISOString(),analysis:null,source:null});
     }
   }
   // The 3D table draws, flips and locks the cards itself; analysis is offered only after it reports completion.
   function finish3D(next:DrawnCard[]) {
     const request=requestSchema.parse({profile:form.profile,question:form.question,topic:form.topic,spreadId:form.spreadId,cards:next});
     setDraws(next);setRevealed(next.map(c=>c.cardId));setFlipped(next.map(c=>c.cardId));
-    updateReading({...request,id:crypto.randomUUID(),createdAt:new Date().toISOString(),analysis:null,source:null});
+    updateReading({...request,id:createReadingId(),createdAt:new Date().toISOString(),analysis:null,source:null});
   }
   function reset() {
     controller.current?.abort();setLoading(false);setDeck(null);setDraws([]);setRevealed([]);setFlipped([]);setReading(null);readingRef.current=null;setAiError('');setFormError('');setConfirm(null);
