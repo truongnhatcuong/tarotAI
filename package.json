@@ -15,7 +15,7 @@
     "dev": "next dev --hostname 127.0.0.1",
     "prebuild": "npm run prepare:images",
     "build": "next build",
-    "start": "next start --hostname 127.0.0.1",
+    "start": "next start --hostname 127.0.0.1 --port 2222",
     "typecheck": "tsc --noEmit",
     "test": "node --import ./scripts/register-test-loader.mjs --test tests/*.test.ts",
     "test:e2e": "playwright test",
