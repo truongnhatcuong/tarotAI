@@ -1,0 +1,8 @@
+.player { margin: 0 0 24px; min-width: 0; }
+.button { min-height: 44px; }
+.button[aria-pressed="true"] { color: var(--gold); border-color: var(--gold); }
+.status { color: var(--muted); font-size: 12px; line-height: 1.8; margin: 10px 0 0; }
+.status:empty { display: none; }
+@media (max-width: 680px) {
+  .button { min-height: 48px; width: 100%; }
+}

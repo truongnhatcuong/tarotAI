@@ -2,11 +2,13 @@
 import { Sparkles, BookOpen, RotateCcw, LoaderCircle } from 'lucide-react';
 import type { Reading } from '@/types/tarot';
 import { getCard } from '@/data/tarot';
+import { ReadingSpeechPlayer } from './reading-speech-player';
 export function AnalysisPanel({reading,loading,error,onAnalyze,onReference,onCancel}:{reading:Reading;loading:boolean;error:string;onAnalyze:()=>void;onReference:()=>void;onCancel:()=>void}) {
   const analysis=reading.analysis;
   return <section id="reading-analysis" className="analysis-panel" aria-busy={loading} aria-label="Diễn giải trải bài"><div className="analysis-heading"><div className="panel-heading"><span className="section-number">03</span><div><h2>Phân tích tổng {reading.cards.length} lá</h2><p>{analysis?(reading.source==='ai'?'Diễn giải AI dựa trên các lá đã rút.':'Tra cứu từ dữ liệu chuẩn · Không phải kết quả AI.'):'Kết nối các biểu tượng với câu hỏi của bạn.'}</p></div></div>{analysis&&<span className="source-badge"><Sparkles size={13}/>{reading.source==='ai'?'AI':'Tra cứu'}</span>}</div>
     {loading?<div className="analysis-loading" role="status"><div className="loading-orbit"><Sparkles size={27}/></div><h3>Đang kết nối các thông điệp…</h3><p>Đang tìm hiểu câu hỏi của bạn và liên hệ với ý nghĩa, chiều, vị trí của các lá đã mở.</p><button className="text-button" onClick={onCancel} type="button">Dừng phân tích</button></div>:<>
       {error&&<p className="error-message" role="alert">{error}</p>}
+      {reading.source==='ai'&&analysis&&<ReadingSpeechPlayer key={reading.id} reading={reading}/>}
       {analysis?<div className="analysis-content"><div className="overview"><span className="eyebrow">{reading.source==='ai'?'LỜI GIẢI CHO CÂU HỎI CỦA BẠN':'TỔNG QUAN'}</span><p>{analysis.overview}</p></div>
         <h3>{reading.source==='ai'?'Phân tích từng lá':'Ý nghĩa từng lá'}</h3><div className="interpretations">{analysis.cards.map((entry,i)=><article key={entry.cardId}><span className="interpretation-number">0{i+1}</span><div><h4>{getCard(entry.cardId).nameVi}<span>{entry.position} · {entry.orientation==='upright'?'Xuôi':'Ngược'}</span></h4><p>{entry.interpretation}</p></div></article>)}</div>
         <div className="analysis-block"><h3>{reading.cards.length === 1 ? 'Liên hệ với câu hỏi' : 'Liên kết giữa các lá'}</h3><p>{analysis.connections}</p></div>

@@ -49,6 +49,8 @@ Một lần phân tích dùng toàn bộ các lá đã rút, giữ nguyên ID, c
 
 AI ưu tiên nội dung câu hỏi, liên hệ từng lá theo đúng chiều và vị trí, rồi đưa ra phần “Thông điệp dành cho bạn” cùng các bước hành động cụ thể. “Khám phá thông điệp” là nút bắt đầu phân tích; phần kết quả chỉ có nút thử lại khi lỗi, diễn giải lại khi đã có kết quả AI hoặc “Diễn giải bằng AI” khi đang xem bản tra cứu. “Đọc ý nghĩa chuẩn” dùng dữ liệu lá bài để tham khảo, không phải lời giải cá nhân theo câu hỏi. Lịch sử AI cũ chưa có trường `message` vẫn đọc được.
 
+Nút “Nghe thông điệp” xuất hiện khi đã có kết quả AI, dùng Web Speech API và tự chọn giọng tiếng Việt do thiết bị/trình duyệt cung cấp, ưu tiên giọng Google nếu có. Không cần khóa API TTS hoặc dịch vụ tính phí. Đọc toàn bộ lời giải AI theo thứ tự hiển thị: tổng quan, từng lá, liên kết, chủ đề, điều cần chú ý, thông điệp và lời khuyên. Giữ tốc độ bình thường và dấu câu để bộ đọc ngắt nghỉ tự nhiên, không chèn khoảng nghỉ bằng bộ hẹn giờ. Nội dung dài được chia thành các đoạn nhỏ trong cùng lượt đọc, chỉ kết thúc khi đọc xong đoạn cuối. Lịch sử AI cũ vẫn đọc đủ những phần có sẵn. Một nút chuyển giữa nghe và dừng, không có lựa chọn giọng, tốc độ hay phần đọc. Website không tự phát âm thanh; đổi trải bài, rời phần kết quả hoặc phân tích lại sẽ dừng đọc. Một số giọng cần kết nối mạng, mức biểu cảm và danh sách giọng phụ thuộc thiết bị. Nếu không có giọng Việt hoặc không hỗ trợ Web Speech API, trang hiển thị hướng dẫn.
+
 ## Ủng hộ Arcana
 
 Nút “Ủng hộ” nằm trên thanh đầu trang ở mọi tab. Nhấn nút để mở hộp thoại chứa QR và tài khoản MB `0372204152`. Người dùng có thể sao chép số tài khoản hoặc tải ảnh QR để quét từ thư viện ảnh trong ứng dụng ngân hàng. Người chuyển tự chọn số tiền; nội dung chuyển khoản là `Ung ho Arcana`.
