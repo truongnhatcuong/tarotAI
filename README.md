@@ -41,6 +41,12 @@ Mapping cần kiểm tra:
 
 Tài liệu package: https://www.npmjs.com/package/@cometpisces/tarot-kit-images
 
+## Ủng hộ Arcana
+
+Nút “Ủng hộ” nằm trên thanh đầu trang ở mọi tab. Nhấn nút để mở hộp thoại chứa QR và tài khoản MB `0372204152`. Người dùng có thể sao chép số tài khoản hoặc tải ảnh QR để quét từ thư viện ảnh trong ứng dụng ngân hàng. Người chuyển tự chọn số tiền; nội dung chuyển khoản là `Ung ho Arcana`.
+
+Ảnh cố định nằm tại `public/donate/mb-0372204152.png`, được tạo qua [VietQR Quick Link](https://www.vietqr.io/en/danh-sach-api/link-tao-ma-nhanh/) với URL `https://img.vietqr.io/image/MB-0372204152-qr_only.png?addInfo=Ung%20ho%20Arcana`, sau đó chuyển sang PNG. Giao diện tải ảnh từ dự án, không gọi VietQR khi khách mở trang. Khi đổi tài khoản, cần cập nhật cả ảnh và thông tin trong `src/components/donation-panel.tsx`.
+
 ## Kết nối AI
 
 Sao chép `.env.example` thành `.env` nếu chưa có file cấu hình; giữ nguyên cấu hình riêng nếu đã có. Điền `OPENAI_API_KEY`, chọn `OPENAI_MODEL` được tài khoản hỗ trợ. Mặc định `gpt-4o-mini`. `OPENAI_BASE_URL` mặc định `https://api.openai.com/v1`; endpoint tùy chỉnh phải hỗ trợ Responses API và Structured Outputs. Khởi động lại server sau khi sửa môi trường.

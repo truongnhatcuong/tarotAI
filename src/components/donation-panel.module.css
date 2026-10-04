@@ -1,0 +1,56 @@
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 9px 13px;
+  border: 1px solid var(--gold);
+  border-radius: 7px;
+  background: transparent;
+  color: var(--gold);
+  font-size: 11px;
+  white-space: nowrap;
+}
+.trigger:hover { background: var(--gold); color: var(--bg); }
+
+.panel {
+  --donation-white: #fff;
+  --donation-border: #c4a77d30;
+  --donation-tint: #c4a77d0b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  width: 440px;
+  max-width: 100%;
+  text-align: center;
+}
+.intro p { color: var(--muted); font-size: 12px; line-height: 1.85; }
+.qr { width: 216px; max-width: 100%; margin: 0; }
+.qrFrame { padding: 12px; background: var(--donation-white); border-radius: 9px; }
+.qrFrame img { width: 100%; height: auto; aspect-ratio: 1; }
+.qr figcaption { margin-top: 10px; color: var(--gold); font-size: 12px; line-height: 1.6; }
+.qr figcaption small { display: block; color: var(--subtle); font-size: 10px; }
+
+.details { min-width: 0; width: 100%; }
+.bank { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 16px; font-size: 12px; color: var(--text); text-align: left; }
+.bank small { display: block; margin-top: 4px; color: var(--subtle); font-size: 10px; }
+.bankMark { display: flex; align-items: center; gap: 3px; color: var(--gold); font-family: var(--font-serif); font-size: 25px; font-weight: 700; letter-spacing: -1px; }
+.bankMark > span { align-self: flex-start; font-size: 13px; }
+.accountLabel { display: block; font-size: 10px; color: var(--subtle); }
+.account { display: block; margin-top: 5px; color: var(--text); font-size: 26px; font-variant-numeric: tabular-nums; letter-spacing: 2px; line-height: 1.4; user-select: all; }
+.actions { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 14px; margin-top: 14px; }
+.copyButton, .downloadLink { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 44px; font-size: 11px; line-height: 1.5; }
+.copyButton { padding: 10px 13px; border: 1px solid var(--donation-border); border-radius: 6px; background: var(--donation-tint); color: var(--gold); }
+.copyButton:hover { background: var(--gold); color: var(--bg); }
+.downloadLink { color: var(--muted); }
+.downloadLink:hover { color: var(--gold); }
+.copyStatus { color: var(--gold); font-size: 10px; line-height: 1.7; }
+.copyStatus:not(:empty) { margin-top: 8px; }
+.thanks { display: flex; align-items: center; justify-content: center; gap: 10px; color: var(--subtle); font-size: 11px; }
+.thanks span { color: var(--gold); font-size: 17px; }
+
+@media (max-width: 680px) {
+  .trigger { min-height: 44px; }
+}

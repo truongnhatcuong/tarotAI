@@ -32,6 +32,18 @@ test('API handles validation, malformed JSON, origin and missing key',async()=>{
     const unavailable=await POST(make(JSON.stringify(request)));assert.equal(unavailable.status,503);assert.equal((await unavailable.json()).code,'AI_NOT_CONFIGURED');
   }finally{if(old===undefined)delete process.env.AI_API_KEY;else process.env.AI_API_KEY=old;}
 });
+test('API checks Origin against the requested Host instead of the listening hostname',async()=>{
+  const make=(url:string,host:string,origin:string)=>new Request(url,{
+    method:'POST',headers:{'Content-Type':'application/json',host,origin},body:'{',
+  });
+  // Malformed JSON reaches validation only when the origin check passes.
+  assert.equal((await POST(make('http://localhost:3000/api/reading','127.0.0.1:3000','http://127.0.0.1:3000'))).status,400);
+  assert.equal((await POST(make('http://127.0.0.1:3000/api/reading','localhost:3000','http://localhost:3000'))).status,400);
+  assert.equal((await POST(make('https://localhost:3000/api/reading','tarot.example','https://tarot.example'))).status,400);
+  for(const origin of ['https://elsewhere.example','http://localhost:3001','https://localhost:3000','http://localhost:3000.evil.example','http://127.0.0.1:3000']){
+    assert.equal((await POST(make('http://127.0.0.1:3000/api/reading','localhost:3000',origin))).status,403);
+  }
+});
 test('server provider call uses private key, canonical data and strict schema; handles refusal and failure',async()=>{
   const old=process.env.AI_API_KEY;process.env.AI_API_KEY='unit-test-private-key';const originalFetch=globalThis.fetch;
   try{
