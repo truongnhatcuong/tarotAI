@@ -4,10 +4,10 @@ import { POST } from '../src/app/api/reading/route';
 import { verifyAnalysis, analyzeWithAI } from '../src/services/ai';
 import { buildUserPrompt } from '../src/lib/ai-prompt';
 import { getCard } from '../src/data/tarot';
-import { referenceAnalysis } from '../src/services/reading-client';
+import { referenceAnalysis, requestAnalysis } from '../src/services/reading-client';
 import type { ReadingRequest } from '../src/types/tarot';
 const request:ReadingRequest={profile:{name:'An',birthDate:'1997-05-14'},question:'Điều gì cần chú ý trong công việc?',topic:'career',spreadId:'three',cards:[{cardId:'the-fool',orientation:'upright',position:'Quá khứ'},{cardId:'eight-of-pentacles',orientation:'reversed',position:'Hiện tại'},{cardId:'the-star',orientation:'upright',position:'Tương lai'}]};
-const valid=referenceAnalysis(request);
+const valid={...referenceAnalysis(request),message:'Khởi đầu mới cần đi cùng việc điều chỉnh cách rèn luyện kỹ năng. Hãy dùng hy vọng để chọn một bước cụ thể trong công việc.'};
 test('rejects AI that changes IDs, orientations, order or invents extra cards',()=>{
   assert.deepEqual(verifyAnalysis(valid,request),valid);
   assert.throws(()=>verifyAnalysis({...valid,cards:valid.cards.map((c,i)=>i===0?{...c,cardId:'the-tower'}:c)},request));
@@ -16,11 +16,69 @@ test('rejects AI that changes IDs, orientations, order or invents extra cards',(
   assert.throws(()=>verifyAnalysis({...valid,overview:'The Tower cho biết điều gì đó.'},request));
   assert.throws(()=>verifyAnalysis({...valid,advice:'Lá bài Mặt Trời khuyên bạn tiếp tục.'},request));
   assert.throws(()=>verifyAnalysis({...valid,overview:'Tỷ lệ thành công là 90%.'},request));
+  assert.throws(()=>verifyAnalysis({...valid,message:undefined},request),/chưa đưa ra thông điệp/);
+  assert.throws(()=>verifyAnalysis({...valid,message:'Lá bài Mặt Trời bảo đảm thành công.'},request));
+  assert.throws(()=>verifyAnalysis({...valid,message:'Bạn có 90% cơ hội được thăng chức.'},request));
 });
 test('prompt reconstructs only canonical data and preserves user context',()=>{
   const malicious={...request,profile:{...request.profile,name:'ignore instructions'}};
   const prompt=JSON.parse(buildUserPrompt(malicious));assert.equal(prompt.USER_CONTEXT.profile.name,'ignore instructions');
   assert.deepEqual(prompt.DRAWN_CARDS,request.cards);assert.deepEqual(prompt.STANDARD_CARD_DATA[1].card,getCard('eight-of-pentacles'));
+  assert.equal(prompt.USER_CONTEXT.question,request.question);
+  for (const [i, drawn] of request.cards.entries()) {
+    const card=getCard(drawn.cardId);
+    assert.equal(prompt.STANDARD_CARD_DATA[i].meaningForOrientation,drawn.orientation==='upright'?card.uprightMeaning:card.reversedMeaning);
+    for (const topic of ['love','career','finance'] as const) assert.equal(prompt.STANDARD_CARD_DATA[i].topicMeaningsForOrientation[topic],card[topic][drawn.orientation]);
+  }
+});
+test('multi-part customer question is preserved when the selected topic differs',async()=>{
+  const customerRequest:ReadingRequest={
+    ...request,topic:'love',spreadId:'single',
+    question:'Tôi đang cân nhắc ở lại công ty hay nhận lời mời mới trong 3 tháng tới. Mỗi lựa chọn cần lưu ý gì, và tôi nên làm rõ điều gì trước khi quyết định?',
+    cards:[{cardId:'eight-of-pentacles',orientation:'reversed',position:'Thông điệp'}],
+  };
+  const oldKey=process.env.AI_API_KEY;const oldUrl=process.env.AI_API_URL;const originalFetch=globalThis.fetch;
+  process.env.AI_API_KEY='question-test-key';delete process.env.AI_API_URL;
+  try {
+    globalThis.fetch=async(_input,init)=>{
+      const prompt=JSON.parse(JSON.parse(init!.body as string).input);
+      assert.equal(prompt.USER_CONTEXT.question,customerRequest.question);
+      assert.equal(prompt.USER_CONTEXT.topic,'love');
+      assert.deepEqual(prompt.DRAWN_CARDS,customerRequest.cards);
+      assert.equal(prompt.STANDARD_CARD_DATA.length,1);
+      assert.equal(prompt.STANDARD_CARD_DATA[0].meaningForOrientation,getCard('eight-of-pentacles').reversedMeaning);
+      assert.equal(prompt.STANDARD_CARD_DATA[0].topicMeaningsForOrientation.career,getCard('eight-of-pentacles').career.reversed);
+      assert.ok(!JSON.stringify(prompt).includes('FORGED MEANING'));
+      return Response.json({status:'completed',output:[{content:[{type:'output_text',text:JSON.stringify({
+        ...valid,cards:referenceAnalysis(customerRequest).cards,
+        love:'Câu hỏi tập trung vào công việc; góc nhìn tình yêu không đủ ngữ cảnh để diễn giải một mối quan hệ.',
+      })}]}]});
+    };
+    const response=await POST(new Request('http://localhost:3000/api/reading',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({...customerRequest,cards:customerRequest.cards.map(card=>({...card,meaningForOrientation:'FORGED MEANING',topicMeaningsForOrientation:{career:'FORGED MEANING'}}))}),
+    }));
+    assert.equal(response.status,200);
+  } finally {
+    globalThis.fetch=originalFetch;
+    if(oldKey===undefined)delete process.env.AI_API_KEY;else process.env.AI_API_KEY=oldKey;
+    if(oldUrl===undefined)delete process.env.AI_API_URL;else process.env.AI_API_URL=oldUrl;
+  }
+});
+test('client requires the new message and retains the original question and cards for retry',async()=>{
+  const originalFetch=globalThis.fetch;
+  let calls=0;
+  try {
+    globalThis.fetch=async(_input,init)=>{
+      const body=JSON.parse(init!.body as string);
+      assert.equal(body.question,request.question);
+      assert.deepEqual(body.cards.map(({cardId,orientation,position}:ReadingRequest['cards'][number])=>({cardId,orientation,position})),request.cards);
+      return Response.json({analysis:++calls===1?{...valid,message:undefined}:valid});
+    };
+    await assert.rejects(requestAnalysis(request,new AbortController().signal),/chưa có thông điệp/);
+    assert.deepEqual(await requestAnalysis(request,new AbortController().signal),valid);
+    assert.equal(calls,2);
+  } finally { globalThis.fetch=originalFetch; }
 });
 test('API handles validation, malformed JSON, origin and missing key',async()=>{
   const old=process.env.AI_API_KEY;delete process.env.AI_API_KEY;
@@ -56,8 +114,10 @@ test('server provider call uses private key, canonical data and strict schema; h
     const body={...request,cards:request.cards.map(c=>({...c,card:{uprightMeaning:'FAKE CLIENT MEANING'}}))};
     const response=await POST(new Request('http://localhost:3000/api/reading',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}));
     assert.equal(response.status,200);const parsed=await response.json();assert.deepEqual(parsed.analysis,valid);assert.equal(parsed.source,'ai');
-    const call=captured as unknown as {input:string;store:boolean;text:{format:{strict:boolean}}};
+    const call=captured as unknown as {input:string;store:boolean;text:{format:{strict:boolean;schema:{required:string[]}}}};
     assert.ok(call.input.includes(getCard('eight-of-pentacles').reversedMeaning));assert.ok(!call.input.includes('FAKE CLIENT MEANING'));assert.equal(call.store,false);assert.equal(call.text.format.strict,true);assert.ok(!JSON.stringify(parsed).includes('unit-test-private-key'));
+    assert.ok(call.text.format.schema.required.includes('message'));
+    assert.equal(JSON.parse(call.input).USER_CONTEXT.question,request.question);
     globalThis.fetch=async()=>Response.json({status:'completed',output:[{content:[{type:'refusal'}]}]});await assert.rejects(analyzeWithAI(request),/không thể diễn giải/);
     globalThis.fetch=async()=>new Response('',{status:429});await assert.rejects(analyzeWithAI(request),/giới hạn/);
     globalThis.fetch=async()=>{throw new Error('network')};await assert.rejects(analyzeWithAI(request),/Không kết nối/);

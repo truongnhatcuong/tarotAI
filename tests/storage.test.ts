@@ -39,6 +39,12 @@ test('history retains IDs, orientations and analysis while limiting to 30',()=>w
   saveHistory(entries);const loaded=loadHistory();assert.equal(loaded.length,HISTORY_LIMIT);
   assert.deepEqual(loaded,entries.slice(0,HISTORY_LIMIT));
 }));
+test('AI history restores both older readings and new readings with a message',()=>withStorage(()=>{
+  const older=reading();older.analysis=referenceAnalysis(older);older.source='ai';
+  const current=reading();current.analysis={...referenceAnalysis(current),message:'Kiểm tra nguồn lực và khả năng thực hiện trước khi bắt đầu.'};current.source='ai';
+  saveHistory([current,older]);
+  assert.deepEqual(loadHistory(),[current,older]);
+}));
 test('invalid JSON and corrupt profile are ignored without crashing',()=>withStorage(items=>{
   items.set('arcana:profile:v1','{');items.set('arcana:history:v1','{');
   assert.equal(loadProfile(),null);assert.deepEqual(loadHistory(),[]);

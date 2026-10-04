@@ -18,7 +18,7 @@ import { History } from './history';
 import { Dialog } from './dialog';
 import { RiderWaiteArtwork } from './rider-waite-artwork';
 import { TarotTable3D, hasWebGL } from './tarot3d/tarot-table-3d';
-import { getCard } from '@/data/tarot';
+import { ReadingCards } from './reading-cards';
 import { DonationPanel } from './donation-panel';
 
 type Tab='reading'|'library'|'history';
@@ -26,6 +26,7 @@ const initialForm:FormValues={profile:{name:'',birthDate:''},question:'',topic:'
 export function TarotExperience() {
   const [tab,setTab]=useState<Tab>('reading');const [form,setForm]=useState(initialForm);
   const [deck,setDeck]=useState<string[]|null>(null);const [draws,setDraws]=useState<DrawnCard[]>([]);const [revealed,setRevealed]=useState<string[]>([]);
+  const [flipped,setFlipped]=useState<string[]>([]);
   const [reading,setReading]=useState<Reading|null>(null);const [history,setHistory]=useState<Reading[]>([]);
   const [formError,setFormError]=useState('');const [aiError,setAiError]=useState('');const [storageError,setStorageError]=useState('');
   const [loading,setLoading]=useState(false);const [zoom,setZoom]=useState<DrawnCard|null>(null);
@@ -38,7 +39,12 @@ export function TarotExperience() {
   },[]);
   const spread=getSpread(form.spreadId);
   const complete=reading!==null;
-  const allRevealed=complete&&revealed.length===reading.cards.length;
+  const allRevealed=complete&&revealed.length===reading.cards.length&&flipped.length===reading.cards.length;
+  useEffect(()=>{
+    if(!allRevealed||!window.matchMedia('(max-width: 680px)').matches)return;
+    const frame=requestAnimationFrame(()=>document.getElementById('reading-cards')?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'}));
+    return ()=>cancelAnimationFrame(frame);
+  },[allRevealed,reading?.id]);
   function persist(next:Reading) {
     const updated=[next,...historyRef.current.filter(item=>item.id!==next.id)].slice(0,30);
     setHistory(updated);historyRef.current=updated;
@@ -49,7 +55,7 @@ export function TarotExperience() {
     const profile=profileSchema.safeParse(form.profile);
     if(!profile.success){setFormError(profile.error.issues[0].message);return;}
     if(form.question.trim().length<5){setFormError('Hãy viết câu hỏi ít nhất 5 ký tự.');return;}
-    setFormError('');setAiError('');setDraws([]);setRevealed([]);setReading(null);readingRef.current=null;
+    setFormError('');setAiError('');setDraws([]);setRevealed([]);setFlipped([]);setReading(null);readingRef.current=null;
     setForm(v=>({...v,profile:profile.data,question:v.question.trim()}));
     try{saveProfile(profile.data);}catch{setStorageError('Hồ sơ chưa được lưu vì trình duyệt không cho phép lưu trữ.');}
     setDeck(shuffledDeck());
@@ -67,14 +73,14 @@ export function TarotExperience() {
   // The 3D table draws, flips and locks the cards itself; analysis is offered only after it reports completion.
   function finish3D(next:DrawnCard[]) {
     const request=requestSchema.parse({profile:form.profile,question:form.question,topic:form.topic,spreadId:form.spreadId,cards:next});
-    setDraws(next);setRevealed(next.map(c=>c.cardId));
+    setDraws(next);setRevealed(next.map(c=>c.cardId));setFlipped(next.map(c=>c.cardId));
     updateReading({...request,id:crypto.randomUUID(),createdAt:new Date().toISOString(),analysis:null,source:null});
   }
   function reset() {
-    controller.current?.abort();setLoading(false);setDeck(null);setDraws([]);setRevealed([]);setReading(null);readingRef.current=null;setAiError('');setFormError('');setConfirm(null);
+    controller.current?.abort();setLoading(false);setDeck(null);setDraws([]);setRevealed([]);setFlipped([]);setReading(null);readingRef.current=null;setAiError('');setFormError('');setConfirm(null);
   }
   async function analyze() {
-    const target=readingRef.current;if(!target||loading)return;
+    const target=readingRef.current;if(!target||loading||controller.current)return;
     const abort=new AbortController();controller.current=abort;setLoading(true);setAiError('');
     try {
       const analysis=await requestAnalysis(target,abort.signal);
@@ -82,10 +88,16 @@ export function TarotExperience() {
     }catch(error){if(!abort.signal.aborted)setAiError(error instanceof Error?error.message:'Không kết nối được AI. Vui lòng thử lại.');}
     finally{if(controller.current===abort){controller.current=null;setLoading(false);}}
   }
+  function viewMessage() {
+    const target=readingRef.current;if(!target)return;
+    setZoom(null);
+    requestAnimationFrame(()=>document.getElementById('reading-analysis')?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'}));
+    if(target.source!=='ai'||!target.analysis)void analyze();
+  }
   function openHistory(item:Reading) {
     controller.current?.abort();setLoading(false);setAiError('');setForm({...initialForm,profile:item.profile,question:item.question,spreadId:item.spreadId,topic:item.topic});
-    setDeck(null);setDraws(item.cards);setReading(item);readingRef.current=item;setRevealed(item.cards.map(c=>c.cardId));setTab('reading');
-    setTimeout(()=>document.getElementById('reading-table')?.scrollIntoView({behavior:'smooth'}),80);
+    setDeck(null);setDraws(item.cards);setReading(item);readingRef.current=item;setRevealed(item.cards.map(c=>c.cardId));setFlipped(item.cards.map(c=>c.cardId));setTab('reading');
+    setTimeout(()=>document.getElementById('reading-cards')?.scrollIntoView({behavior:'smooth'}),80);
   }
   function removeHistory(id:string) {
     const next=historyRef.current.filter(item=>item.id!==id);historyRef.current=next;setHistory(next);
@@ -112,11 +124,12 @@ export function TarotExperience() {
         <div className="reading-column"><section id="reading-table" className="reading-table"><div className="table-heading"><div><span className="eyebrow">{deck||reading?'TRẢI BÀI CỦA BẠN':'LẮNG LẠI MỘT CHÚT'}</span><h2>{deck||reading?spread.name:'Những thông điệp đang chờ bạn'}</h2></div><span className="table-symbol">✧</span></div>
         {!deck&&!reading?<div className="table-welcome"><div className="welcome-orbit"><div className="welcome-card welcome-card-one"><CardBack/></div><div className="welcome-card welcome-card-two"><CardBack/></div><div className="welcome-card welcome-card-three"><CardBack/></div></div><h3>Hít thở sâu. Nghĩ về câu hỏi của bạn.</h3><p>Đặt ý nguyện ở bên trái, rồi tự tay chọn những lá bài<br className="desktop-break"/>thu hút bạn từ bộ 78 lá đã xáo.</p><span className="welcome-pill"><ShieldCheck size={14}/>Bạn luôn là người quyết định hành trình của mình</span></div>:<>
           {webgl&&deck?<><TarotTable3D deck={deck} spreadId={form.spreadId} positions={spread.positions} allowReversed={form.allowReversed} onComplete={finish3D} onZoom={setZoom} onShuffle={()=>setDeck(shuffledDeck())}/>
-          {complete&&<div className="revealed-chips">{draws.map((d,i)=>{const c=getCard(d.cardId);return <button type="button" key={d.cardId} onClick={()=>setZoom(d)} aria-label={`Xem chi tiết ${c.nameVi}, ${d.orientation==='upright'?'xuôi':'ngược'}`}><span><b>0{i+1} · {d.position}</b><small>{c.nameVi} · {d.orientation==='upright'?'Xuôi ↑':'Ngược ↓'}</small></span></button>;})}</div>}</>:<>
+          </>:!allRevealed?<>
           <p className="table-instruction" role="status" aria-live="polite">{allRevealed?'Chạm vào lá bài để phóng to và khám phá ý nghĩa.':complete?'Chạm từng lá hoặc lật tất cả để mở thông điệp.':`Chọn ${spread.positions.length-draws.length} lá từ bộ bài úp bên dưới.`}</p>
-          <div className={`drawn-cards ${spread.positions.length===1?'single-card':''}`}>{spread.positions.map((position,index)=>draws[index]?<TarotCardView key={draws[index].cardId} drawn={draws[index]} index={index} revealed={revealed.includes(draws[index].cardId)} onReveal={()=>setRevealed(previous=>[...new Set([...previous,draws[index].cardId])])} onZoom={()=>setZoom(draws[index])}/>:<div className="empty-card-slot" key={position}><span className="position-label"><span>0{index+1}</span>{position}</span><div className="slot-outline"><Sparkles size={22} strokeWidth={1}/><span>Chọn lá {index+1}</span></div></div>)}</div>
+          <div className={`drawn-cards ${spread.positions.length===1?'single-card':''}`}>{spread.positions.map((position,index)=>draws[index]?<TarotCardView key={draws[index].cardId} drawn={draws[index]} index={index} revealed={revealed.includes(draws[index].cardId)} onReveal={()=>setRevealed(previous=>[...new Set([...previous,draws[index].cardId])])} onZoom={()=>setZoom(draws[index])} onRevealComplete={()=>setFlipped(previous=>[...new Set([...previous,draws[index].cardId])])}/>:<div className="empty-card-slot" key={position}><span className="position-label"><span>0{index+1}</span>{position}</span><div className="slot-outline"><Sparkles size={22} strokeWidth={1}/><span>Chọn lá {index+1}</span></div></div>)}</div>
           {complete&&!allRevealed&&<button type="button" className="secondary-button reveal-all" onClick={()=>setRevealed(draws.map(d=>d.cardId))}><Sparkles size={16}/>Lật tất cả các lá</button>}
-          {deck&&!complete&&<Deck deck={deck} used={draws.map(d=>d.cardId)} needed={spread.positions.length-draws.length} onPick={pick} onShuffle={()=>setDeck(shuffledDeck())}/>}</>}
+          {deck&&!complete&&<Deck deck={deck} used={draws.map(d=>d.cardId)} needed={spread.positions.length-draws.length} onPick={pick} onShuffle={()=>setDeck(shuffledDeck())}/>}</>:null}
+          {reading&&allRevealed&&<ReadingCards reading={reading} loading={loading} onZoom={setZoom} onMessage={viewMessage}/>}
           {reading&&<div className="reading-question"><span>CÂU HỎI CỦA {reading.profile.name.toUpperCase()}</span><p>“{reading.question}”</p></div>}
         </>}
         <div className="table-footer"><span><span className="status-dot"/>Rút ngẫu nhiên · Không trùng lá</span><span>{form.allowReversed?'Xuôi & Ngược':'Chỉ lá xuôi'}</span></div>
@@ -125,8 +138,8 @@ export function TarotExperience() {
       <div className="experience-notes"><span>✧ Không có câu trả lời duy nhất. Chỉ có những góc nhìn để khám phá.</span><p>Tarot hỗ trợ suy ngẫm, không bảo đảm dự đoán tương lai hoặc thay thế quyết định của bạn.</p></div>
     </section></>:tab==='library'?<Library/>:<History history={history} onOpen={openHistory} onDelete={removeHistory} onClear={()=>setConfirm('clear')} onNew={()=>{reset();setTab('reading');}}/>}
     </main><footer className="site-footer"><span className="footer-brand">✦ arcana</span><p>Một chút tĩnh lặng. Một chút thấu hiểu.</p><button type="button" className="text-button" onClick={()=>setConfirm('privacy')}>Xóa dữ liệu của tôi</button></footer>
-    {zoom&&<CardDetail id={zoom.cardId} orientation={zoom.orientation} onClose={()=>setZoom(null)}/>}
+    {zoom&&<CardDetail id={zoom.cardId} orientation={zoom.orientation} onClose={()=>setZoom(null)} onViewMessage={allRevealed&&reading?.cards.some(card=>card.cardId===zoom.cardId)?viewMessage:undefined} interpretation={reading?.source==='ai'?reading.analysis?.cards.find(card=>card.cardId===zoom.cardId)?.interpretation:undefined}/>}
     {confirm&&<Dialog title={confirm==='reset'?'Bắt đầu trải bài mới?':confirm==='clear'?'Xóa toàn bộ nhật ký?':'Xóa dữ liệu trên trình duyệt?'} onClose={()=>setConfirm(null)}><p className="dialog-description">{confirm==='reset'?'Trải bài đã rút đủ lá được giữ trong nhật ký. Các lá đang chọn dở sẽ được bỏ để bắt đầu lại.':confirm==='clear'?'Toàn bộ lịch sử đã lưu sẽ được xóa khỏi trình duyệt này.':'Tên, ngày sinh và lịch sử trải bài sẽ được xóa khỏi trình duyệt này.'}</p><div className="dialog-actions"><button type="button" className="secondary-button" onClick={()=>setConfirm(null)}>Quay lại</button><button type="button" className="primary-button" onClick={confirmAction}>{confirm==='reset'?'Bắt đầu mới':'Xóa dữ liệu'}</button></div></Dialog>}
-    {help&&<Dialog title="Tarot, một lời gợi mở" onClose={()=>setHelp(false)}><div className="help-content"><p>Tarot sử dụng 78 biểu tượng: 22 lá Ẩn chính và 56 lá Ẩn phụ thuộc bốn bộ Gậy, Cốc, Kiếm, Tiền. Mỗi lá có ý nghĩa xuôi và ngược; lá ngược không mặc định là điều xấu.</p><h3>Cách trải bài</h3><p>Nhập tên, ngày sinh và một câu hỏi mở. Chọn kiểu trải bài, xáo bộ 78 lá, tự chọn các lá úp rồi chạm để lật. Nhấn phân tích AI để nhận diễn giải hoặc đọc dữ liệu chuẩn khi chưa kết nối AI.</p><h3>Giữ quyền tự quyết</h3><p>Tarot không có xác suất dự đoán đúng có thể kiểm chứng một cách đáng tin cậy. Website không tạo tỷ lệ chính xác giả. Kết quả là góc nhìn để suy ngẫm, không phải lời bảo đảm.</p><h3>Dữ liệu của bạn</h3><p>Hồ sơ và tối đa 30 trải bài được lưu trên thiết bị này. Khi chọn phân tích AI, hồ sơ, câu hỏi và trải bài được gửi qua server tới dịch vụ AI. Ngày sinh không được dùng để suy diễn định mệnh. Bạn có thể xóa dữ liệu qua nút ở cuối trang.</p></div></Dialog>}
+    {help&&<Dialog title="Tarot, một lời gợi mở" onClose={()=>setHelp(false)}><div className="help-content"><p>Tarot sử dụng 78 biểu tượng: 22 lá Ẩn chính và 56 lá Ẩn phụ thuộc bốn bộ Gậy, Cốc, Kiếm, Tiền. Mỗi lá có ý nghĩa xuôi và ngược; lá ngược không mặc định là điều xấu.</p><h3>Cách trải bài</h3><p>Nhập tên, ngày sinh và một câu hỏi mở. Chọn kiểu trải bài, xáo bộ 78 lá, tự chọn các lá úp rồi chạm để lật. Chọn “Khám phá thông điệp” để đọc diễn giải từng lá và thông điệp tổng của trải bài, hoặc đọc ý nghĩa chuẩn để tham khảo.</p><h3>Giữ quyền tự quyết</h3><p>Tarot không có xác suất dự đoán đúng có thể kiểm chứng một cách đáng tin cậy. Website không tạo tỷ lệ chính xác giả. Kết quả là góc nhìn để suy ngẫm, không phải lời bảo đảm.</p><h3>Dữ liệu của bạn</h3><p>Hồ sơ và tối đa 30 trải bài được lưu trên thiết bị này. Khi chọn phân tích AI, hồ sơ, câu hỏi và trải bài được gửi qua server tới dịch vụ AI. Ngày sinh không được dùng để suy diễn định mệnh. Bạn có thể xóa dữ liệu qua nút ở cuối trang.</p></div></Dialog>}
   </div>;
 }

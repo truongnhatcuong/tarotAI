@@ -1,0 +1,27 @@
+.section { margin: 22px 0; min-width: 0; scroll-margin-top: 22px; }
+.heading { margin-bottom: 18px; text-align: center; }
+.heading h3 { margin-top: 8px; color: var(--text); font-size: 23px; line-height: 1.45; }
+.heading p { margin-top: 7px; color: var(--muted); font-size: 11px; line-height: 1.7; }
+.heading :global(.eyebrow) { justify-content: center; }
+.cards { display: flex; gap: 18px; justify-content: center; margin: 0; padding: 3px 3px 14px; list-style: none; }
+.card { flex: 0 1 175px; min-width: 0; text-align: center; }
+.position { display: block; min-height: 32px; color: var(--gold); font-size: 11px; line-height: 1.5; }
+.artworkButton { display: block; position: relative; width: 100%; padding: 0; border: 1px solid var(--line); border-radius: 9px; background: var(--panel); box-shadow: 0 9px 22px #0005; overflow: hidden; }
+.artworkButton:hover { border-color: var(--gold); }
+.zoom { position: absolute; right: 7px; bottom: 7px; display: inline-flex; align-items: center; gap: 5px; padding: 6px 8px; border-radius: 5px; color: var(--text); background: var(--bg); font-size: 9px; }
+.card h4 { margin: 11px 0 4px; font-family: var(--font-serif); font-size: 20px; font-weight: 400; line-height: 1.4; }
+.orientation { color: var(--muted); font-size: 10px; }
+.single .card { flex-basis: 225px; }
+.messageButton { display: flex; width: min(100%, 350px); margin: 14px auto 0; }
+.note { margin-top: 10px; color: var(--subtle); font-size: 10px; line-height: 1.8; text-align: center; }
+
+@media (max-width: 680px) {
+  .heading h3 { font-size: 22px; }
+  .cards { justify-content: flex-start; gap: 16px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: 3px; scrollbar-width: thin; scrollbar-color: var(--gold) transparent; }
+  .card { flex: 0 0 clamp(170px, 52vw, 210px); scroll-snap-align: center; }
+  .single { justify-content: center; }
+  .single .card { flex-basis: min(100%, 240px); }
+  .position { font-size: 12px; }
+  .messageButton { min-height: 48px; font-size: 13px; }
+  .note { font-size: 11px; }
+}

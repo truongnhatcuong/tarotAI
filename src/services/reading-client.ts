@@ -14,6 +14,7 @@ export async function requestAnalysis(request: ReadingRequest, signal: AbortSign
   const parsed = analysisSchema.safeParse(result.analysis);
   if (!parsed.success) throw new Error('Kết quả AI chưa hợp lệ. Các lá đã rút vẫn được giữ nguyên; hãy thử phân tích lại.');
   const analysis = parsed.data;
+  if (!analysis.message) throw new Error('Kết quả AI chưa có thông điệp cho câu hỏi của bạn. Các lá đã mở vẫn được giữ nguyên; hãy thử lại.');
   if (analysis.cards.length !== request.cards.length || analysis.cards.some((c,i)=>c.cardId!==request.cards[i].cardId || c.orientation!==request.cards[i].orientation || c.position!==request.cards[i].position)) throw new Error('Kết quả không khớp trải bài. Hãy thử lại.');
   return analysis;
 }

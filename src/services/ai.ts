@@ -142,8 +142,15 @@ export function verifyAnalysis(
       502,
     );
   const analysis = parsed.data;
+  if (!analysis.message)
+    throw new AIError(
+      "MISSING_MESSAGE",
+      "AI chưa đưa ra thông điệp cho câu hỏi của bạn. Hãy thử lại với các lá đã mở.",
+      502,
+    );
   const prose = [
     analysis.overview,
+    analysis.message,
     analysis.connections,
     analysis.advice,
     analysis.love,

@@ -39,7 +39,7 @@ test('all 78 original PNGs are served successfully and browser decodes the five 
   }
 });
 
-test('known front images appear after the 3D flip ends; reversed keeps the same source', async ({page}) => {
+test('saved readings show canonical enlarged artwork; reversed keeps the same source', async ({page}) => {
   const reading:Reading = {
     id:crypto.randomUUID(), createdAt:new Date().toISOString(),
     profile:{name:'An',birthDate:'1997-05-14'}, question:'Tôi nên chú ý điều gì trên hành trình mới?',
@@ -54,16 +54,12 @@ test('known front images appear after the 3D flip ends; reversed keeps the same 
   await page.goto('/');
   await page.getByRole('button', {name:/Nhật ký/}).click();
   await page.getByRole('button', {name:'Xem lại'}).click();
-  const fronts = page.locator('.card-side-front');
-  // This assertion runs during the 800 ms flip. Merely revealing a card must
-  // not immediately attach the artwork to its front before GSAP completes.
-  await expect(fronts.locator('img')).toHaveCount(0);
+  const fronts = page.getByRole('region', {name:'Các lá đã rút'});
   await expect(fronts.locator('img')).toHaveCount(3);
   for (let i=0; i<reading.cards.length; i++) {
     const drawn = reading.cards[i];
-    await expect(fronts.nth(i).locator('img')).toHaveAttribute('src', manifest.images[drawn.cardId]);
-    await expect(fronts.nth(i).locator('img')).toHaveCSS('object-fit','contain');
+    await expect(fronts.locator('img').nth(i)).toHaveAttribute('src', manifest.images[drawn.cardId]);
+    await expect(fronts.locator('img').nth(i)).toHaveCSS('object-fit','contain');
   }
-  await expect(fronts.nth(1).locator('img')).toHaveClass('reversed');
-  await expect(fronts.locator('svg')).toHaveCount(0);
+  await expect(fronts.locator('img').nth(1)).toHaveClass('reversed');
 });

@@ -5,9 +5,11 @@ import { ZoomIn } from 'lucide-react';
 import { getCard } from '@/data/tarot';
 import type { DrawnCard } from '@/types/tarot';
 import { CardBack } from './card-back';
-export function TarotCardView({drawn,revealed,onReveal,onZoom,index}:{drawn:DrawnCard;revealed:boolean;onReveal:()=>void;onZoom:()=>void;index:number}) {
+export function TarotCardView({drawn,revealed,onReveal,onZoom,index,onRevealComplete}:{drawn:DrawnCard;revealed:boolean;onReveal:()=>void;onZoom:()=>void;index:number;onRevealComplete?:()=>void}) {
   const ref=useRef<HTMLDivElement>(null);
   const flipRef=useRef<HTMLDivElement>(null);
+  const revealDoneRef=useRef(onRevealComplete);
+  revealDoneRef.current=onRevealComplete;
   const [flipComplete,setFlipComplete]=useState(false);
   const [imageReady,setImageReady]=useState(false);
   const [imageError,setImageError]=useState(false);
@@ -25,7 +27,7 @@ export function TarotCardView({drawn,revealed,onReveal,onZoom,index}:{drawn:Draw
     const context=gsap.context(()=>{
       if(!revealed){gsap.set(flipRef.current,{rotationY:0});setFlipComplete(false);return;}
       const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      gsap.to(flipRef.current,{rotationY:180,duration:reduced?0:0.8,ease:'power3.inOut',onComplete:()=>setFlipComplete(true)});
+      gsap.to(flipRef.current,{rotationY:180,duration:reduced?0:0.8,ease:'power3.inOut',onComplete:()=>{setFlipComplete(true);revealDoneRef.current?.();}});
     },ref);
     return ()=>context.revert();
   },[revealed]);

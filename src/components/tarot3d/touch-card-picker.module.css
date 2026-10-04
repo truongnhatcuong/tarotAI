@@ -1,0 +1,10 @@
+.picker { margin: 12px 0 2px; min-width: 0; }
+.heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 0 6px; color: var(--gold); font-size: 12px; line-height: 1.6; }
+.heading small { color: var(--subtle); font-size: 10px; white-space: nowrap; }
+.cards { position: relative; display: flex; gap: 14px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; padding: 15px max(6px, calc(50% - 56px)) 10px; scrollbar-width: thin; scrollbar-color: var(--gold) transparent; }
+.card { flex: 0 0 112px; width: 112px; min-height: 208px; padding: 4px; border: 2px solid transparent; border-radius: 10px; background: transparent; color: var(--muted); scroll-snap-align: center; -webkit-user-select: none; user-select: none; }
+.card > :global(.card-back) { height: 174px; pointer-events: none; }
+.card > span { display: block; padding-top: 8px; font-size: 11px; pointer-events: none; }
+.active { border-color: var(--gold); background: var(--panel); color: var(--gold); }
+.card:disabled { opacity: .45; }
+.card:disabled > :global(.card-back) { filter: saturate(.4); }

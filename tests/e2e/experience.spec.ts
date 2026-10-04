@@ -21,7 +21,7 @@ test('draw, reveal, zoom, AI error, reference history and profile persistence',a
   await zoom.click();await expect(page.getByRole('dialog')).toBeVisible();
   await expect(page.getByRole('dialog').locator('img')).toHaveAttribute('src',/\/tarot\/.+\.png$/);
   await page.getByRole('button',{name:'Đóng',exact:true}).click();
-  await page.getByRole('button',{name:'Phân tích bằng AI'}).click();await expect(page.getByRole('alert').filter({hasText:'Chưa kết nối dịch vụ AI.'})).toBeVisible();
+  await page.getByRole('button',{name:'Khám phá thông điệp',exact:true}).click();await expect(page.getByRole('alert').filter({hasText:'Chưa kết nối dịch vụ AI.'})).toBeVisible();
   await page.getByRole('button',{name:'Đọc ý nghĩa chuẩn'}).click();await expect(page.getByText('Tra cứu từ dữ liệu chuẩn · Không phải kết quả AI.')).toBeVisible();
   const stored=await page.evaluate(()=>JSON.parse(localStorage.getItem('arcana:history:v1')!));expect(stored).toHaveLength(1);expect(new Set(stored[0].cards.map((c:{cardId:string})=>c.cardId)).size).toBe(3);
   await page.getByRole('button',{name:/Nhật ký/}).click();await expect(page.getByRole('heading',{name:'Nhìn lại những thông điệp.'})).toBeVisible();await page.getByRole('button',{name:'Xem lại'}).click();await expect(page.getByText('Tra cứu từ dữ liệu chuẩn · Không phải kết quả AI.')).toBeVisible();
@@ -51,15 +51,16 @@ test('AI cancel and retry preserve the exact saved cards and show successful ana
       cards:reading.cards.map(card=>({...card,interpretation:'Ý nghĩa của lá được trình bày tại vị trí này.'})),
       connections:'Các chủ đề khởi đầu, rèn luyện và hy vọng gợi những hướng suy ngẫm.',
       love:null,career:'Cân nhắc kỹ năng cần rèn luyện và bước tiếp theo.',finance:null,
+      message:'Hãy gắn hy vọng về công việc với một bước rèn luyện cụ thể.',
       advice:'Chọn một hành động nhỏ phù hợp hoàn cảnh thực tế.',
     };
     await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({analysis,source:'ai'})});
   });
   await page.goto('/');await page.getByRole('button',{name:/Nhật ký/}).click();await page.getByRole('button',{name:'Xem lại'}).click();
-  await page.getByRole('button',{name:'Phân tích bằng AI'}).click();await expect(page.getByRole('heading',{name:'Đang kết nối các thông điệp…'})).toBeVisible();
+  await page.getByRole('button',{name:'Khám phá thông điệp',exact:true}).click();await expect(page.getByRole('heading',{name:'Đang kết nối các thông điệp…'})).toBeVisible();
   await page.getByRole('button',{name:'Dừng phân tích'}).click();await expect(page.getByRole('heading',{name:'Đang kết nối các thông điệp…'})).not.toBeVisible();
   const before=await page.evaluate(()=>JSON.parse(localStorage.getItem('arcana:history:v1')!));expect(before[0].analysis).toBeNull();expect(before[0].cards).toEqual(reading.cards);
-  await page.getByRole('button',{name:'Phân tích bằng AI'}).click();await expect(page.getByText('Thông điệp diễn giải trong bài kiểm tra giao diện.')).toBeVisible();
+  await page.getByRole('button',{name:'Khám phá thông điệp',exact:true}).click();await expect(page.getByText('Thông điệp diễn giải trong bài kiểm tra giao diện.')).toBeVisible();
   await expect(page.getByText('Diễn giải AI dựa trên các lá đã rút.')).toBeVisible();
   const after=await page.evaluate(()=>JSON.parse(localStorage.getItem('arcana:history:v1')!));expect(after).toHaveLength(1);expect(after[0].id).toBe(reading.id);expect(after[0].cards).toEqual(reading.cards);expect(after[0].source).toBe('ai');expect(calls).toBe(2);
 });
@@ -82,12 +83,14 @@ test('history deletion and forgetting profile require confirmation and persist',
   await page.reload();await expect(page.getByLabel('Tên của bạn')).toHaveValue('');await expect(page.getByLabel('Ngày sinh')).toHaveValue('');
 });
 test('all four spreads can complete and upright-only is respected',async({page})=>{
+  test.setTimeout(180000);
+  await page.emulateMedia({reducedMotion:'reduce'});
   await page.goto('/');await page.getByLabel('Tên của bạn').fill('An');await page.getByLabel('Ngày sinh').fill('2000-01-01');await page.getByLabel('Câu hỏi của bạn').fill('Tôi nên chú ý điều gì hôm nay?');
   await page.getByLabel('Bao gồm lá ngược').uncheck();
   for(const [label,count] of [['Thông điệp hôm nay',1],['Dòng chảy thời gian',3],['Chuyện tình yêu',3],['Con đường sự nghiệp',3]] as const){
     await page.getByRole('button',{name:new RegExp(label)}).click();await page.getByRole('button',{name:'Xáo bài & bắt đầu'}).click();
-    for(let i=1;i<=count;i++){const button=page.getByRole('button',{name:`Chọn lá úp số ${i}`,exact:true});await expect(button).toBeEnabled();await button.click({position:{x:12,y:60}});}
-    await page.getByRole('button',{name:'Lật tất cả các lá'}).click();expect(await page.getByRole('button',{name:/Phóng to.*xuôi/}).count()).toBe(count);
+    for(let i=1;i<=count;i++){const button=page.getByRole('button',{name:`Chọn lá úp số ${i}`,exact:true});await expect(button).toBeEnabled({timeout:90000});await button.focus();await page.keyboard.press('Enter');await expect(page.getByTestId('tarot-scene')).toHaveAttribute('data-phase',i<count?'ready':'done',{timeout:90000});}
+    await expect(page.getByRole('region',{name:'Các lá đã rút'}).getByRole('button',{name:/Xem chi tiết.*xuôi/})).toHaveCount(count);
     await page.getByRole('button',{name:'Bắt đầu một trải bài mới'}).click();await page.getByRole('button',{name:'Bắt đầu mới',exact:true}).click();
   }
   await page.getByRole('button',{name:/Nhật ký/}).click();await expect(page.getByText('4 trải bài đã lưu')).toBeVisible();

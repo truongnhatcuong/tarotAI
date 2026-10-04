@@ -13,7 +13,7 @@ import { makeCardGeometry } from './card-geometry';
 import { ModelHand, ProceduralHand, type HandRig } from './hand';
 
 export type Phase = 'intro' | 'shuffling' | 'ready' | 'drawing' | 'revealing' | 'done' | 'error';
-export interface SceneState { phase: Phase; picked: number; message?: string }
+export interface SceneState { phase: Phase; picked: number; pickedIndices?: number[]; message?: string }
 export interface SceneControl { choose(deckIndex: number): void; focus(deckIndex: number): void }
 export interface SceneProps {
   deck: string[]; spreadId: SpreadId; positions: readonly string[]; allowReversed: boolean; imageOf: (id: string) => string;
@@ -105,7 +105,7 @@ function World(props: SceneProps) {
 
   const emit = useCallback((p: Phase, message?: string) => {
     phase.current = p;
-    propsRef.current.onState({ phase: p, picked: picked.current.length, message });
+    propsRef.current.onState({ phase: p, picked: picked.current.length, pickedIndices: picked.current.map(card => card.deckIndex), message });
   }, []);
 
   // ---- helpers -------------------------------------------------------------
@@ -529,7 +529,8 @@ function World(props: SceneProps) {
             <mesh ref={m => { meshes.current[i] = m; }} geometry={geometry} material={cardMaterials[i]} castShadow={high} receiveShadow
               onPointerOver={e => { e.stopPropagation(); if (phase.current === 'ready') { gl.domElement.style.cursor = 'pointer'; hoverCard(i); } else if (phase.current === 'done' && picked.current.some(x => x.deckIndex === i)) { gl.domElement.style.cursor = 'zoom-in'; hover.current = i; } }}
               onPointerOut={() => { gl.domElement.style.cursor = ''; if (phase.current === 'ready') hoverCard(-1); else if (hover.current === i) hover.current = -1; }}
-              onClick={e => { e.stopPropagation(); onCardClick(i); }} />
+              onPointerMove={e => { if (e.pointerType === 'touch' && phase.current === 'ready') { e.stopPropagation(); hoverCard(i); } }}
+              onClick={e => { e.stopPropagation(); if (e.delta > 8) return; onCardClick(i); }} />
           </group>
         </group>
       ))}

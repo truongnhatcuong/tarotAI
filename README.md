@@ -41,6 +41,14 @@ Mapping cần kiểm tra:
 
 Tài liệu package: https://www.npmjs.com/package/@cometpisces/tarot-kit-images
 
+## Xem thông điệp trải bài
+
+Giữ bốn kiểu `single`, `three`, `love`, `career`. Sau khi lật đủ các lá, trang hiển thị ảnh lớn với nút “Khám phá thông điệp”; trên điện thoại có thể vuốt xem từng ảnh và chạm để phóng to. Nút này cũng có trong cửa sổ phóng to, đóng cửa sổ và đưa người dùng xuống phần diễn giải.
+
+Một lần phân tích dùng toàn bộ các lá đã rút, giữ nguyên ID, chiều, vị trí và câu hỏi. Kết quả gồm thông điệp từng lá và phân tích tổng 1 hoặc 3 lá theo kiểu đã chọn. Xem lại thông điệp đã được lưu sẽ dùng kết quả hiện có; nút “Diễn giải lại” mới tạo yêu cầu phân tích khác.
+
+AI ưu tiên nội dung câu hỏi, liên hệ từng lá theo đúng chiều và vị trí, rồi đưa ra phần “Thông điệp dành cho bạn” cùng các bước hành động cụ thể. “Khám phá thông điệp” là nút bắt đầu phân tích; phần kết quả chỉ có nút thử lại khi lỗi, diễn giải lại khi đã có kết quả AI hoặc “Diễn giải bằng AI” khi đang xem bản tra cứu. “Đọc ý nghĩa chuẩn” dùng dữ liệu lá bài để tham khảo, không phải lời giải cá nhân theo câu hỏi. Lịch sử AI cũ chưa có trường `message` vẫn đọc được.
+
 ## Ủng hộ Arcana
 
 Nút “Ủng hộ” nằm trên thanh đầu trang ở mọi tab. Nhấn nút để mở hộp thoại chứa QR và tài khoản MB `0372204152`. Người dùng có thể sao chép số tài khoản hoặc tải ảnh QR để quét từ thư viện ảnh trong ứng dụng ngân hàng. Người chuyển tự chọn số tiền; nội dung chuyển khoản là `Ung ho Arcana`.

@@ -70,7 +70,7 @@ test('real WebGL table: shuffles 78 cards, hand grabs → carries → places →
   expect(probe.minCamArm, 'camera never clips the arm').toBeGreaterThan(1.8);
 
   // analysis is only offered now, and uses the same locked cards
-  await page.getByRole('button', { name: 'Phân tích bằng AI' }).click();
+  await page.getByRole('button', { name: 'Khám phá thông điệp', exact: true }).click();
   await expect.poll(() => aiCalls).toBe(1);
   expect(errors).toEqual([]);
 });
