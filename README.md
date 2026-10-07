@@ -67,11 +67,11 @@ Luồng dữ liệu:
 
 1. Người dùng nhập tên, ngày sinh, câu hỏi/chủ đề và loại trải bài.
 2. Bộ 78 ID được xáo bằng Fisher–Yates với Web Crypto và rejection sampling. Người dùng chọn lá; orientation được chọn độc lập nếu bật lá ngược.
-3. Frontend gửi profile, câu hỏi, spread, các ID/chiều/vị trí và dữ liệu mỗi lá tới `POST /api/reading`.
+3. Frontend gửi profile, câu hỏi, chủ đề, loại trải bài và các ID/chiều/vị trí tới `POST /api/reading`; không gửi ý nghĩa lá bài.
 4. Server kiểm tra ngày sinh, câu hỏi, ID, số lá, không trùng lá và vị trí. Dữ liệu ý nghĩa do client gửi bị bỏ qua; server lấy lại dữ liệu chuẩn theo ID.
-5. Prompt phân tách ngữ cảnh người dùng khỏi chỉ dẫn, dùng đúng nghĩa theo chiều, cấm đổi bài, thêm bài và phần trăm giả. Tên/ngày sinh không được dùng để suy diễn định mệnh.
-6. Responses API dùng JSON Schema strict. Server kiểm tra lại ID/chiều/thứ tự/vị trí; từ chối tên lá thêm trong nội dung hoặc tỷ lệ phần trăm phát hiện được. Đây là các kiểm tra cấu trúc và một số mẫu văn bản, không phải chứng minh mọi phát biểu AI đều đúng.
-7. Kết quả có tổng quan, từng lá, liên kết, chủ đề phù hợp và lời khuyên. Không có khóa hiển thị lỗi rõ; người dùng có thể chọn bản tra cứu được gắn nhãn riêng. Thử lại giữ nguyên trải bài. Tín hiệu hủy request được truyền tới lời gọi provider; dữ liệu lịch sử chỉ nhận kết quả đúng ID/chiều/vị trí và nguồn diễn giải hợp lệ.
+5. Prompt phân tách ngữ cảnh người dùng khỏi chỉ dẫn và chỉ gửi nghĩa đúng chiều; không gửi nghĩa của chiều đối diện hoặc từ khóa xuôi để tránh làm lệch diễn giải. Dữ liệu chủ đề của 78 lá ngược độc lập với nghĩa xuôi. Prompt yêu cầu trả lời trực tiếp, giữ khó khăn và mâu thuẫn, không ép kết luận tích cực. Tên/ngày sinh không được dùng để suy diễn định mệnh.
+6. Server tạo bản nháp rồi gọi AI thêm một lần để biên tập chính tả, cách dùng từ, mức độ khẳng định và tính nhất quán với câu hỏi/các lá. Cả hai bước dùng JSON Schema strict (hoặc JSON mode khi provider không hỗ trợ), chung thời hạn 55 giây và tín hiệu hủy. Mỗi lượt thường có hai lời gọi AI, tăng thời gian và chi phí so với trước. Server kiểm tra lại ID/chiều/thứ tự/vị trí ở cả hai bước; từ chối tên lá thêm hoặc tỷ lệ phần trăm phát hiện được. Không trả bản nháp nếu biên tập thất bại. Bước biên tập và các guard không chứng minh mọi phát biểu AI đều đúng.
+7. Response, client, lịch sử và phần render dùng chung chuẩn hóa Unicode NFC, khoảng trắng và dấu câu; sửa một số lỗi chính tả không mơ hồ đã ghi nhận. Mỗi phần hiển thị thành một đoạn văn, không giữ xuống dòng tùy ý của AI. Kết quả có tổng quan, từng lá, liên kết, chủ đề phù hợp, điều cần chú ý, thông điệp và lời khuyên. Không có khóa hiển thị lỗi rõ; người dùng có thể chọn bản tra cứu được gắn nhãn riêng. Thử lại giữ nguyên trải bài. Tín hiệu hủy request được truyền tới lời gọi provider; dữ liệu lịch sử chỉ nhận kết quả đúng ID/chiều/vị trí và nguồn diễn giải hợp lệ.
 
 API không lưu hội thoại ở provider (`store: false`). Profile, câu hỏi và ngày sinh vẫn được gửi tới provider khi người dùng chọn phân tích; không được coi đây là dữ liệu chỉ lưu trên thiết bị.
 
@@ -85,11 +85,13 @@ API không lưu hội thoại ở provider (`store: false`). Profile, câu hỏi
 src/app/                    Trang, stylesheet và API route
 src/components/             Form, deck, flip card, dialog, thư viện, nhật ký
 src/data/card-seeds.ts       Nghĩa riêng biệt của 22 + 56 lá
+src/data/reversed-topics.ts  Nghĩa ngược riêng theo từng chủ đề cho 78 lá
 src/data/tarot.ts            78 object TarotCard đầy đủ trường
 src/data/spreads.ts          4 kiểu trải bài và vị trí
 src/data/rider-waite-images.ts  Filename tài liệu và URL package
 src/data/image-manifest.json   Mapping ảnh được chuẩn bị từ package
-src/lib/ai-prompt.ts         System prompt và JSON Schema
+src/lib/ai-prompt.ts         Prompt tạo/biên tập lời giải và JSON Schema
+src/lib/vietnamese-text.ts   Chuẩn hóa văn bản dùng chung
 src/lib/validation.ts       Validation đầu vào, kết quả và lịch sử
 src/services/               Draw, localStorage, AI server và AI client
 scripts/                    Chuẩn bị/kiểm tra artwork, test loader
@@ -114,3 +116,15 @@ Playwright dùng Chromium; nếu máy chưa có, cài với `npx playwright inst
 Lần cài bị chặn đã tạo lockfile không đầy đủ với alias lỗi cho package ảnh, nên file đó được loại bỏ. `npm install` thành công khi có mạng sẽ tạo lại `package-lock.json`; không nên dùng `npm ci` trước bước này.
 
 Trước khi mở API công khai, cần bổ sung giới hạn lượt gọi/xác thực phù hợp nền tảng hosting và ngân sách. Project hiện chạy cục bộ, chưa có rate limiter phân tán hoặc tài khoản người dùng.
+
+## Đánh giá chất lượng lời giải AI
+
+Bộ kiểm thử thường giả lập provider để kiểm tra cấu trúc, nội dung gửi đúng chiều, lỗi, hủy và luồng hiển thị; không dùng các mock đó làm bằng chứng về chất lượng sinh văn bản. Báo cáo [đánh giá Tarot](docs/tarot-evaluation.md) ghi nhận 8 tình huống gọi provider thật: khó khăn, thuận lợi, mâu thuẫn, lá ngược có dấu hiệu tháo gỡ, cùng lá ở hoàn cảnh khác và câu hỏi thiếu bối cảnh. Dữ liệu khách trong bộ này là giả lập.
+
+Chạy lại bằng cấu hình AI trong `.env` (có dùng lượt API):
+
+```sh
+node --env-file=.env --import ./scripts/register-test-loader.mjs scripts/evaluate-tarot.mjs --output /private/tmp/tarot-evaluation.json
+```
+
+Có thể thêm `--case career-overload` để chạy một ca hoặc `--diagnostics` để lưu riêng các bản nháp/biên tập vào báo cáo kiểm thử. Script không ghi khóa hoặc headers. Đánh giá nội dung cần đọc kết quả đối chiếu với `expectations` của từng ca; không coi schema hợp lệ, từ khóa cảnh báo hoặc một lần chạy là bảo đảm mọi lời giải tương lai đều đúng. Lịch sử cũ được làm sạch cách trình bày, không tự gọi lại AI hoặc thay đổi kết luận đã lưu.

@@ -3,8 +3,9 @@ import { Sparkles, BookOpen, RotateCcw, LoaderCircle } from 'lucide-react';
 import type { Reading } from '@/types/tarot';
 import { getCard } from '@/data/tarot';
 import { ReadingSpeechPlayer } from './reading-speech-player';
+import { normalizeAnalysis } from '@/lib/vietnamese-text';
 export function AnalysisPanel({reading,loading,error,onAnalyze,onReference,onCancel}:{reading:Reading;loading:boolean;error:string;onAnalyze:()=>void;onReference:()=>void;onCancel:()=>void}) {
-  const analysis=reading.analysis;
+  const analysis=reading.analysis ? normalizeAnalysis(reading.analysis) : null;
   return <section id="reading-analysis" className="analysis-panel" aria-busy={loading} aria-label="Diễn giải trải bài"><div className="analysis-heading"><div className="panel-heading"><span className="section-number">03</span><div><h2>Phân tích tổng {reading.cards.length} lá</h2><p>{analysis?(reading.source==='ai'?'Diễn giải AI dựa trên các lá đã rút.':'Tra cứu từ dữ liệu chuẩn · Không phải kết quả AI.'):'Kết nối các biểu tượng với câu hỏi của bạn.'}</p></div></div>{analysis&&<span className="source-badge"><Sparkles size={13}/>{reading.source==='ai'?'AI':'Tra cứu'}</span>}</div>
     {loading?<div className="analysis-loading" role="status"><div className="loading-orbit"><Sparkles size={27}/></div><h3>Đang kết nối các thông điệp…</h3><p>Đang tìm hiểu câu hỏi của bạn và liên hệ với ý nghĩa, chiều, vị trí của các lá đã mở.</p><button className="text-button" onClick={onCancel} type="button">Dừng phân tích</button></div>:<>
       {error&&<p className="error-message" role="alert">{error}</p>}

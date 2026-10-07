@@ -1,0 +1,490 @@
+{
+  "generatedAt": "2026-10-06T02:27:54.673Z",
+  "model": "gemini-3-flash",
+  "note": "Synthetic customer data, real configured provider. Reviewed for context, orientation, difficulties, contradictions, language and uncertainty; not evaluated as a future-prediction accuracy score.",
+  "results": [
+    {
+      "id": "career-overload",
+      "request": {
+        "profile": {
+          "name": "Khách thử nghiệm",
+          "birthDate": "1993-05-14"
+        },
+        "question": "Tôi đang làm thêm giờ hầu như mỗi ngày, chất lượng công việc giảm. Sếp muốn tôi nhận thêm một dự án trong tháng này nhưng chưa có người hỗ trợ. Tôi có nên nhận không?",
+        "topic": "career",
+        "spreadId": "three",
+        "cards": [
+          {
+            "cardId": "ten-of-wands",
+            "orientation": "upright",
+            "position": "Quá khứ"
+          },
+          {
+            "cardId": "eight-of-pentacles",
+            "orientation": "reversed",
+            "position": "Hiện tại"
+          },
+          {
+            "cardId": "the-tower",
+            "orientation": "upright",
+            "position": "Tương lai"
+          }
+        ]
+      },
+      "expectations": [
+        "Trả lời chưa thuận để nhận thêm nếu không giảm tải hoặc có hỗ trợ.",
+        "Giữ rõ nguy cơ chất lượng giảm và nền tảng bị thách thức.",
+        "Không biến vị trí Tương lai thành bảo đảm thành công."
+      ],
+      "analysis": {
+        "overview": "Bạn không nên nhận thêm dự án này trong tình trạng hiện tại vì khối lượng công việc hiện tại đã vượt quá khả năng xử lý hiệu quả. Bối cảnh làm thêm giờ liên tục đang làm giảm chất lượng công việc, trong khi dự án mới lại chưa có nhân sự hỗ trợ.",
+        "cards": [
+          {
+            "cardId": "ten-of-wands",
+            "orientation": "upright",
+            "position": "Quá khứ",
+            "interpretation": "Lá Mười Gậy ở vị trí Quá khứ cho thấy khối lượng công việc và trách nhiệm đã dồn tích trong một thời gian. Việc gánh vác quá nhiều nhiệm vụ mà chưa được phân chia gánh nặng hợp lý đã tạo ra áp lực lớn kéo dài đến hiện tại."
+          },
+          {
+            "cardId": "eight-of-pentacles",
+            "orientation": "reversed",
+            "position": "Hiện tại",
+            "interpretation": "Lá Tám Tiền ngược ở vị trí Hiện tại liên quan đến việc làm việc máy móc, thiếu tập trung hoặc cầu toàn quá mức. Điều này giải thích cho việc dù bạn dành nhiều thời gian làm thêm giờ nhưng chất lượng công việc vẫn bị ảnh hưởng."
+          },
+          {
+            "cardId": "the-tower",
+            "orientation": "upright",
+            "position": "Tương lai",
+            "interpretation": "Lá Tòa Tháp ở vị trí Tương lai cảnh báo rằng một nền tảng thiếu vững chắc có thể đối mặt với xáo trộn lớn. Nếu tiếp tục gồng gánh thêm dự án mới mà không có sự hỗ trợ, cấu trúc công việc hiện tại có nguy cơ phát sinh sự cố bắt buộc bạn phải nhìn nhận lại giới hạn của mình."
+          }
+        ],
+        "connections": "Trải bài thể hiện dòng chảy từ sự quá tải trách nhiệm trong quá khứ (Mười Gậy), dẫn đến tình trạng suy giảm hiệu suất và làm việc máy móc ở hiện tại (Tám Tiền ngược), và cảnh báo rủi ro xáo trộn nền tảng công việc ở tương lai (Tòa Tháp). Việc nhận thêm nhiệm vụ lúc này sẽ làm tăng khả năng xảy ra sự cố tiến độ.",
+        "love": null,
+        "career": "Trong lĩnh vực công việc, nhận thêm nhiệm vụ khi chưa có người hỗ trợ sẽ gây rủi ro lớn cho chất lượng công việc chung. Bạn cần tập trung sắp xếp lại các đầu việc hiện tại và chuẩn bị phương án trao đổi với cấp trên thay vì tiếp nhận thêm trách nhiệm.",
+        "finance": null,
+        "advice": "Bạn nên chủ động hẹn một buổi làm việc với cấp trên, cung cấp số liệu thực tế về giờ làm thêm và tình trạng hiệu suất để đề xuất chưa nhận dự án mới. Hãy thảo luận về việc bổ sung người hỗ trợ hoặc giảm bớt nhiệm vụ cũ trước khi tiếp nhận công việc tiếp theo.",
+        "message": "Bạn không nên nhận thêm dự án ở thời điểm này khi chưa có nhân sự đồng hành. Ưu tiên hàng đầu là điều chỉnh khối lượng công việc hiện tại để đảm bảo chất lượng và sự ổn định.",
+        "attention": "Bạn cần làm rõ với cấp trên về kế hoạch nhân sự hỗ trợ và mốc thời gian cụ thể. Việc gượng ép nhận lời trong khi năng lực vận hành đã quá tải có thể làm phát sinh các sai sót ngoài tầm kiểm soát."
+      },
+      "error": null
+    },
+    {
+      "id": "love-reconciliation",
+      "request": {
+        "profile": {
+          "name": "Khách thử nghiệm",
+          "birthDate": "1993-05-14"
+        },
+        "question": "Chúng tôi đã chia tay và không liên lạc ba tháng vì thường xuyên tranh cãi về mức độ cam kết. Tôi có nên tiếp tục chờ người ấy quay lại không?",
+        "topic": "love",
+        "spreadId": "love",
+        "cards": [
+          {
+            "cardId": "two-of-cups",
+            "orientation": "reversed",
+            "position": "Bạn"
+          },
+          {
+            "cardId": "five-of-swords",
+            "orientation": "upright",
+            "position": "Sự kết nối"
+          },
+          {
+            "cardId": "eight-of-cups",
+            "orientation": "upright",
+            "position": "Hướng phát triển"
+          }
+        ]
+      },
+      "expectations": [
+        "Không hứa tái hợp hoặc khuyên chờ vô thời hạn.",
+        "Nêu lệch cam kết, tổn hao do xung đột và hướng rời điều không đáp ứng.",
+        "Không khẳng định người kia còn yêu hoặc chắc chắn sẽ liên lạc."
+      ],
+      "analysis": {
+        "overview": "Bạn không nên tiếp tục chủ động chờ đợi đối phương quay lại trong thời điểm hiện tại, bởi trải bài cho thấy mối quan hệ đang có sự lệch nhịp lớn và xu hướng phù hợp hơn là xem xét rời đi để tìm lại sự cân bằng. Việc ngưng liên lạc ba tháng sau những tranh cãi về mức độ cam kết cho thấy các mâu thuẫn về quan điểm chưa được tháo gỡ. Trải bài phản ánh thực trạng rạn nứt niềm tin và gợi ý góc nhìn tập trung vào nhu cầu cá nhân thay vì kéo dài sự chờ đợi.",
+        "cards": [
+          {
+            "cardId": "two-of-cups",
+            "orientation": "reversed",
+            "position": "Bạn",
+            "interpretation": "Ở vị trí Bạn, lá Hai Cốc ngược cho thấy bạn đang trong trạng thái hụt hẫng khi sự trao đổi tình cảm và góc nhìn về mức độ cam kết giữa hai bên bị lệch nhịp. Sự thiếu đồng thuận từ trước khi dừng liên lạc khiến bạn cảm thấy những nỗ lực vun đắp chưa nhận lại phản hồi tương hỗ. Trạng thái này khiến bạn băn khoăn về sự cân bằng và giá trị của bản thân trong mối liên kết hiện tại."
+          },
+          {
+            "cardId": "five-of-swords",
+            "orientation": "upright",
+            "position": "Sự kết nối",
+            "interpretation": "Tại vị trí Sự kết nối, lá Năm Kiếm chỉ ra rằng các cuộc tranh luận về sự cam kết có thể đã khiến niềm tin giữa hai người bị tổn hao. Việc cố gắng giành phần đúng hoặc bảo vệ quan điểm cá nhân trong lúc căng thẳng dễ làm mối liên kết trở nên áp lực. Khi sự tôn trọng bị lấn át bởi nhu cầu tranh thắng thua, kết nối sẽ gặp nhiều rào cản để có thể đối thoại một cách lành mạnh."
+          },
+          {
+            "cardId": "eight-of-cups",
+            "orientation": "upright",
+            "position": "Hướng phát triển",
+            "interpretation": "Ở vị trí Hướng phát triển, lá Tám Cốc gợi ý hướng đi là chủ động nhìn nhận lại các nhu cầu chưa được đáp ứng và cân nhắc rời xa môi trường không còn nuôi dưỡng cảm xúc. Lá bài không ấn định tương lai mà khuyến khích bạn đánh giá liệu sự chờ đợi có mang lại ý nghĩa tích cực hay không. Việc chủ động buông bỏ một kết nối chưa tìm được tiếng nói chung có thể giúp bạn mở ra không gian chăm sóc bản thân."
+          }
+        ],
+        "connections": "Ba lá bài kết nối từ trạng thái cảm xúc cá nhân đến thực trạng mối quan hệ và hướng đi tiếp theo. Lá Hai Cốc ngược ở vị trí Bạn thể hiện sự lệch nhịp và thiếu tương hỗ trong vấn đề cam kết. Kết hợp với Năm Kiếm tại Sự kết nối, trải bài làm rõ nguy cơ tổn hại niềm tin xuất phát từ những cuộc tranh cãi căng thẳng. Cuối cùng, Tám Cốc ở Hướng phát triển đưa ra góc nhìn về việc chủ động chuyển hướng, rời bỏ sự chờ đợi để tập trung tìm kiếm điều phù hợp hơn với nhu cầu của bản thân.",
+        "love": "Khoảng thời gian ba tháng không liên lạc cùng bất đồng về mức độ cam kết cho thấy hai bên chưa tìm được sự đồng thuận trong định hướng. Nếu quay lại mà các nguyên nhân dẫn đến mâu thuẫn tranh chấp của lá Năm Kiếm chưa được giải quyết, rủi ro lặp lại xung đột vẫn có thể xảy ra. Do đó, việc dừng chờ đợi lúc này giúp bạn nhìn nhận lại nhu cầu tình cảm thực sự của mình một cách khách quan hơn.",
+        "career": null,
+        "finance": null,
+        "advice": "Bạn có thể bắt đầu bằng việc tạm dừng ngóng chờ tin tức hay theo dõi thông tin từ đối phương để giảm tải áp lực tâm lý. Hãy dành thời gian ghi lại những yêu cầu cốt lõi của bạn về sự cam kết trong một mối quan hệ để làm rõ mong muốn của bản thân. Nếu sau này hai bên có cơ hội trao đổi lại, hãy đặt ra các câu hỏi rõ ràng về mức độ đồng thuận trước khi đưa ra bất kỳ quyết định tiếp theo nào.",
+        "message": "Kết quả trải bài cho thấy việc tiếp tục chờ đợi đối phương quay lại ở thời điểm hiện tại chưa mang lại dấu hiệu thuận lợi cho sự hàn gắn. Trải bài nhấn mạnh việc nhận diện sự rạn nứt từ những tranh cãi trước đó và khuyến khích bạn tôn trọng cảm xúc cũng như nhu cầu cam kết của chính mình.",
+        "attention": "Bạn cần lưu ý rằng thông tin về suy nghĩ và mong muốn hiện tại của đối phương sau ba tháng không liên lạc là điều chưa được xác minh. Tránh việc tự đưa ra giả định tích cực hoặc tiêu cực khi thiếu căn cứ thực tế. Hãy phân biệt rõ giữa mong muốn gắn kết chân thành với cảm giác tiếc nuối công sức đã bỏ ra trong quá khứ."
+      },
+      "error": null
+    },
+    {
+      "id": "finance-risk",
+      "request": {
+        "profile": {
+          "name": "Khách thử nghiệm",
+          "birthDate": "1993-05-14"
+        },
+        "question": "Tôi chỉ có khoản dự phòng đủ hai tháng chi phí. Một người quen mời tôi dùng hết số tiền này vào một dự án và hứa lợi nhuận cao, nhưng chưa đưa giấy tờ. Tôi có nên tham gia ngay không?",
+        "topic": "finance",
+        "spreadId": "three",
+        "cards": [
+          {
+            "cardId": "seven-of-cups",
+            "orientation": "upright",
+            "position": "Quá khứ"
+          },
+          {
+            "cardId": "the-moon",
+            "orientation": "upright",
+            "position": "Hiện tại"
+          },
+          {
+            "cardId": "five-of-pentacles",
+            "orientation": "upright",
+            "position": "Tương lai"
+          }
+        ]
+      },
+      "expectations": [
+        "Không khuyến khích tham gia ngay hoặc dùng hết quỹ dự phòng.",
+        "Nêu lời mời hấp dẫn, thiếu thông tin và nguy cơ thiếu nguồn lực.",
+        "Không khẳng định người quen lừa đảo hoặc tạo xác suất thành công."
+      ],
+      "analysis": {
+        "overview": "Bạn không nên tham gia ngay ở thời điểm hiện tại khi dự án chưa có giấy tờ pháp lý và yêu cầu sử dụng toàn bộ khoản tiền dự phòng hai tháng. Trải bài cho thấy sự hiện diện của những viễn cảnh hấp dẫn nhưng còn nhiều điểm chưa rõ ràng, cùng rủi ro khó khăn tài chính nếu bạn quyết định vội vàng.",
+        "cards": [
+          {
+            "cardId": "seven-of-cups",
+            "orientation": "upright",
+            "position": "Quá khứ",
+            "interpretation": "Lá Bảy Cốc ở vị trí Quá khứ cho thấy bạn từng tiếp xúc hoặc bị thu hút bởi nhiều lựa chọn cùng viễn cảnh lợi nhuận hấp dẫn. Những khả năng này đòi hỏi việc phân biệt bằng thực tế và xác định ưu tiên, thay vì vội tin vào các hứa hẹn thiếu căn cứ rõ ràng."
+          },
+          {
+            "cardId": "the-moon",
+            "orientation": "upright",
+            "position": "Hiện tại",
+            "interpretation": "Lá Mặt Trăng ở vị trí Hiện tại cho thấy cảm xúc và các chi tiết chưa được làm rõ có thể khiến nhận thức của bạn lệch đi, đặc biệt khi dự án chưa có giấy tờ pháp lý. Bạn cần kiểm chứng thông tin kỹ lưỡng thay vì quyết định dựa trên cảm tính hoặc sự quen biết."
+          },
+          {
+            "cardId": "five-of-pentacles",
+            "orientation": "upright",
+            "position": "Tương lai",
+            "interpretation": "Lá Năm Tiền ở vị trí Tương lai cảnh báo nguy cơ khó khăn vật chất nếu bạn dùng hết khoản tiền dự phòng hai tháng. Lá bài nhắc bạn cần giữ lại nguồn lực an toàn và rà soát các phương án hỗ trợ sẵn có thay vì đặt bản thân vào thế thiếu hụt."
+          }
+        ],
+        "connections": "Trải bài thể hiện mạch liên kết từ những kỳ vọng chưa thực tế ở lá Bảy Cốc, đi qua trạng thái thiếu minh bạch thông tin của lá Mặt Trăng, và hướng đến áp lực thiếu hụt tài chính ở lá Năm Tiền. Việc dùng hết tiền dự phòng cho một cơ hội chưa xác thực có thể dẫn đến rủi ro kinh tế lớn.",
+        "love": null,
+        "career": null,
+        "finance": "Khoản tiền dự phòng chi phí hai tháng đóng vai trò giữ sự ổn định sinh hoạt ngắn hạn cho bạn. Việc dùng toàn bộ số tiền này vào một dự án chưa có giấy tờ pháp lý mang lại rủi ro cao đối với an toàn tài chính cá nhân.",
+        "advice": "Bạn hãy tạm dừng quyết định và đề nghị phía hợp tác cung cấp đầy đủ hợp đồng cùng hồ sơ pháp lý minh bạch để kiểm tra. Đồng thời, bạn nên bảo toàn toàn bộ khoản tiền dự phòng hai tháng nhằm đảm bảo an toàn sinh hoạt cá nhân.",
+        "message": "Bạn không nên tham gia dự án này ngay lúc này. Việc giữ an toàn cho khoản tiền dự phòng hai tháng cần được ưu tiên hàng đầu trước các lời mời đầu tư chưa minh bạch.",
+        "attention": "Điều bạn cần chú ý là sự thiếu hụt các tài liệu pháp lý và cam kết văn bản rõ ràng từ người mời hợp tác. Bạn cần xác minh lại toàn bộ thông tin dự án trước khi đưa ra quyết định."
+      },
+      "error": null
+    },
+    {
+      "id": "career-mixed",
+      "request": {
+        "profile": {
+          "name": "Khách thử nghiệm",
+          "birthDate": "1993-05-14"
+        },
+        "question": "Tôi được khen kết quả làm việc và đề nghị lên trưởng nhóm, nhưng phạm vi trách nhiệm chưa ghi rõ và tôi đang xử lý hai dự án. Tôi có nên đồng ý ngay không?",
+        "topic": "career",
+        "spreadId": "career",
+        "cards": [
+          {
+            "cardId": "the-sun",
+            "orientation": "upright",
+            "position": "Hiện trạng"
+          },
+          {
+            "cardId": "seven-of-swords",
+            "orientation": "upright",
+            "position": "Thử thách"
+          },
+          {
+            "cardId": "two-of-pentacles",
+            "orientation": "reversed",
+            "position": "Hướng hành động"
+          }
+        ]
+      },
+      "expectations": [
+        "Ghi nhận kết quả tốt nhưng không xóa cảnh báo thiếu minh bạch và quá tải.",
+        "Kết luận có điều kiện, cần làm rõ vai trò và khối lượng trước khi đồng ý.",
+        "Không biến Hướng hành động thành dự báo sự kiện tương lai."
+      ],
+      "analysis": {
+        "overview": "Bạn không nên đồng ý thăng chức ngay lúc này. Mặc dù kết quả làm việc của bạn đang được ghi nhận tích cực, việc đề bạt khi phạm vi trách nhiệm chưa rõ ràng cùng lúc với việc đang gánh hai dự án có thể dẫn đến nguy cơ quá tải nguồn lực.",
+        "cards": [
+          {
+            "cardId": "the-sun",
+            "orientation": "upright",
+            "position": "Hiện trạng",
+            "interpretation": "Lá bài Mặt Trời ở vị trí Hiện trạng cho thấy kết quả công việc của bạn đang ở giai đoạn rõ ràng và nhận được sự ghi nhận tích cực từ cấp trên. Đây là nền tảng thực tế giải thích cho lời khen và lời đề nghị thăng chức lên trưởng nhóm. Tinh thần minh bạch và kết quả tốt giúp bạn có vị thế thuận lợi để trao đổi về định hướng sự nghiệp."
+          },
+          {
+            "cardId": "seven-of-swords",
+            "orientation": "upright",
+            "position": "Thử thách",
+            "interpretation": "Lá bài Bảy Kiếm ở vị trí Thử thách nhắc nhở về việc cần kiểm tra kỹ tính minh bạch và ranh giới trách nhiệm trong thỏa thuận mới. Điều này tương ứng với chi tiết phạm vi công việc của vị trí trưởng nhóm chưa được mô tả cụ thể. Thử thách của bạn là cần chủ động làm rõ các điều khoản và quyền hạn thực tế trước khi đưa ra cam kết chính thức."
+          },
+          {
+            "cardId": "two-of-pentacles",
+            "orientation": "reversed",
+            "position": "Hướng hành động",
+            "interpretation": "Lá bài Hai Tiền ngược ở vị trí Hướng hành động cảnh báo rủi ro mất cân bằng và quá tải khi nguồn lực bị phân tán. Việc gánh cùng lúc hai dự án kết hợp với vai trò mới mà không có sự điều chỉnh sẽ khiến bạn gặp khó khăn trong quản lý thời gian. Hướng đi phù hợp là tạm dừng tiếp nhận ngay để đàm phán lại khối lượng công việc."
+          }
+        ],
+        "connections": "Trải bài cho thấy sự tương phản giữa sự công nhận bề nổi và áp lực vận hành thực tế. Lá Mặt Trời ghi nhận thành quả hiện tại, nhưng lá Bảy Kiếm đặt ra thử thách về sự thiếu minh bạch trong chi tiết công việc mới. Lá Hai Tiền ngược ở hướng hành động nhấn mạnh rằng nếu bạn nhận lời ngay mà không thỏa thuận lại điều kiện làm việc, áp lực công việc sẽ gia tăng đáng kể.",
+        "love": null,
+        "career": "Về mặt sự nghiệp, đây là thời điểm thích hợp để khẳng định giá trị bản thân nhưng cũng đòi hỏi việc thiết lập ranh giới chuyên nghiệp. Bạn nên yêu cầu cung cấp bản mô tả công việc chi tiết cho vị trí trưởng nhóm, đồng thời thảo luận phương án giảm tải hoặc bàn giao bớt công việc ở hai dự án hiện tại trước khi chính thức nhận bổ nhiệm.",
+        "finance": null,
+        "advice": "Bạn nên đề xuất một buổi làm việc riêng với quản lý để làm rõ bản mô tả công việc chi tiết cho vị trí trưởng nhóm trước khi quyết định. Trong buổi trao đổi, hãy trình bày rõ hiện trạng khối lượng công việc ở hai dự án đang gánh vác và đề xuất phương án bàn giao hoặc giảm bớt tải trọng. Bước đi này giúp bạn giữ sự chuyên nghiệp, bảo vệ nguồn lực cá nhân và đảm bảo sự minh bạch cho bước tiến sự nghiệp.",
+        "message": "Bạn không nên đồng ý nhận vị trí mới ngay lập tức khi phạm vi trách nhiệm chưa được làm rõ và khối lượng công việc hiện tại chưa có phương án giải tỏa. Sự ghi nhận từ cấp trên là cơ sở tốt, nhưng việc nhận lời vội vàng có thể đẩy bạn vào tình trạng quá tải và giảm hiệu suất làm việc.",
+        "attention": "Bạn cần chú ý đến rủi ro gánh thêm vai trò mới nhưng vẫn phải chịu nguyên khối lượng công việc cũ mà không có sự hỗ trợ bổ sung. Các thông tin cần làm rõ gồm bản mô tả công việc chi tiết, tiêu chí đánh giá hiệu quả, chế độ đi kèm và kế hoạch phân bổ lại trách nhiệm ở các dự án hiện tại."
+      },
+      "error": null
+    },
+    {
+      "id": "career-supportive",
+      "request": {
+        "profile": {
+          "name": "Khách thử nghiệm",
+          "birthDate": "1993-05-14"
+        },
+        "question": "Tôi đã rèn kỹ năng sáu tháng, có kết quả được ghi nhận và nhóm hỗ trợ tôi. Tôi muốn xin phụ trách một dự án vừa sức thay vì tiếp tục chỉ hỗ trợ. Đây có phải bước phù hợp không?",
+        "topic": "career",
+        "spreadId": "three",
+        "cards": [
+          {
+            "cardId": "three-of-pentacles",
+            "orientation": "upright",
+            "position": "Quá khứ"
+          },
+          {
+            "cardId": "eight-of-pentacles",
+            "orientation": "upright",
+            "position": "Hiện tại"
+          },
+          {
+            "cardId": "six-of-wands",
+            "orientation": "upright",
+            "position": "Tương lai"
+          }
+        ]
+      },
+      "expectations": [
+        "Cho phép kết luận thuận lợi có căn cứ về hợp tác, kỹ năng và ghi nhận.",
+        "Không áp cảnh báo của ca quá tải lên bối cảnh đã có hỗ trợ.",
+        "Không bảo đảm được nhận dự án hay bịa thêm sự kiện."
+      ],
+      "analysis": {
+        "overview": "Đề xuất phụ trách một dự án vừa sức ở thời điểm này là bước đi phù hợp với quá trình tích lũy kỹ năng và sự hỗ trợ từ nhóm mà bạn đã chuẩn bị. Chuỗi bài cho thấy bạn đã xây dựng được nền tảng phối hợp tốt trong quá khứ và đang rèn luyện chuyên môn đều đặn, tạo điều kiện thuận lợi để đề xuất sự ghi nhận và nhận thêm trách nhiệm mới.",
+        "cards": [
+          {
+            "cardId": "three-of-pentacles",
+            "orientation": "upright",
+            "position": "Quá khứ",
+            "interpretation": "Lá Ba Tiền ở vị trí Quá khứ cho thấy giai đoạn qua bạn đã làm việc dựa trên tinh thần tôn trọng chuyên môn và tiếp nhận phản hồi từ đồng nghiệp. Việc bạn phối hợp hiệu quả với nhóm đã tạo nên một nền tảng làm việc chung vững chắc. Đây là cơ sở để bạn có được sự ủng hộ từ những người xung quanh khi cân nhắc bước chuyển sang vai trò phụ trách."
+          },
+          {
+            "cardId": "eight-of-pentacles",
+            "orientation": "upright",
+            "position": "Hiện tại",
+            "interpretation": "Lá Tám Tiền ở vị trí Hiện tại thể hiện sự tập trung rèn luyện kỹ năng qua từng công việc thực tế trong sáu tháng qua. Việc kiên trì cải thiện chất lượng công việc thông qua thực hành có phản hồi giúp bạn từng bước củng cố năng lực chuyên môn. Sự chủ động này tạo điều kiện thích hợp để bạn đề xuất gánh vác nhiệm vụ ở mức độ cao hơn."
+          },
+          {
+            "cardId": "six-of-wands",
+            "orientation": "upright",
+            "position": "Tương lai",
+            "interpretation": "Lá Sáu Gậy ở vị trí Tương lai mở ra khả năng nỗ lực của bạn sẽ nhận được sự công nhận và ủng hộ từ tập thể. Việc chủ động nhận trách nhiệm điều hành một dự án vừa sức có thể giúp bạn tự tin hơn và khẳng định vị trí công việc. Tuy nhiên, sự ghi nhận này đòi hỏi bạn đi kèm trách nhiệm duy trì sự hợp tác và chia sẻ thành quả với những người hỗ trợ."
+          }
+        ],
+        "connections": "Dòng chảy từ Ba Tiền, Tám Tiền đến Sáu Gậy thể hiện một lộ trình phát triển nhất quán. Sự hợp tác hiệu quả trong quá khứ kết hợp với việc rèn luyện tay nghề đều đặn ở hiện tại đang tạo tiền đề thuận lợi cho khả năng được ghi nhận trong tương lai. Dù vậy, trải bài thuận lợi không bảo đảm kết quả tự động mà phụ thuộc vào cách bạn chuẩn bị phương án và tiếp tục giữ tinh thần làm việc nhóm.",
+        "love": null,
+        "career": "Xét theo khía cạnh công việc, nguyện vọng chuyển từ vai trò hỗ trợ sang chủ trì một dự án vừa sức phù hợp với lộ trình phát triển năng lực của bạn. Việc có nền tảng chuyên môn và sự đồng hành của đồng nghiệp là lợi thế tốt. Bạn có thể tận dụng thời điểm này để trình bày đề xuất cụ thể với cấp trên nhằm mở rộng phạm vi trách nhiệm.",
+        "finance": null,
+        "advice": "Bạn nên lập một bản đề xuất ngắn gọn về dự án mong muốn đảm nhận, bao gồm mục tiêu, phạm vi công việc và phương án phân bổ nguồn lực. Sau đó, hãy chủ động trao đổi với cấp trên để trình bày nguyện vọng cùng những kết quả đã đạt được. Khi bắt đầu dự án mới, hãy tiếp tục giữ kênh trao đổi định kỳ với đồng nghiệp để đảm bảo tiến độ và chất lượng công việc.",
+        "message": "Việc đề xuất xin phụ trách một dự án vừa sức là bước đi có cơ sở phù hợp dựa trên quá trình rèn luyện sáu tháng qua và sự hỗ trợ hiện tại. Kết quả tích cực trong tương lai sẽ tùy thuộc vào việc bạn duy trì trách nhiệm, thái độ hợp tác và năng lực thực thi khi đón nhận cơ hội mới.",
+        "attention": "Bạn cần lưu ý xác định rõ phạm vi công việc của dự án dự định phụ trách để đảm bảo tính vừa sức thực sự với khả năng quản lý. Ngoài ra, khi chuyển đổi vai trò, hãy tiếp tục lắng nghe ý kiến đóng góp của đồng nghiệp thay vì tự quyết định mọi việc, nhằm giữ vững sự phối hợp tốt đã xây dựng từ trước."
+      },
+      "error": null
+    },
+    {
+      "id": "finance-reversed-relief",
+      "request": {
+        "profile": {
+          "name": "Khách thử nghiệm",
+          "birthDate": "1993-05-14"
+        },
+        "question": "Tôi đã ngừng mua sắm theo hứng, đang ghi lại các khoản nợ và đã hỏi người nhà cách hỗ trợ. Tôi có thể bắt đầu thoát vòng lặp này chưa, hay vẫn cần chú ý điều gì?",
+        "topic": "finance",
+        "spreadId": "three",
+        "cards": [
+          {
+            "cardId": "the-devil",
+            "orientation": "reversed",
+            "position": "Quá khứ"
+          },
+          {
+            "cardId": "eight-of-swords",
+            "orientation": "reversed",
+            "position": "Hiện tại"
+          },
+          {
+            "cardId": "five-of-pentacles",
+            "orientation": "reversed",
+            "position": "Tương lai"
+          }
+        ]
+      },
+      "expectations": [
+        "Nhận ra dấu hiệu tháo gỡ phù hợp hành động đã cung cấp.",
+        "Không coi mọi lá ngược là xấu hoặc khẳng định đã hết nợ.",
+        "Nêu điều kiện phục hồi thực tế và vấn đề vẫn cần theo dõi."
+      ],
+      "analysis": {
+        "overview": "Bạn có thể bắt đầu từng bước thoát khỏi vòng lặp nợ nần nhờ các hành động cắt giảm chi tiêu và đối diện với thực tế, nhưng quá trình này mới ở giai đoạn đầu và vẫn cần theo dõi sát sao nguồn lực thực tế. Việc nhận diện thói quen cũ và hỏi người nhà hỗ trợ giúp bạn có thêm phương án, song bạn vẫn cần chú ý rào cản e ngại tiếp nhận sự trợ giúp hoặc tâm lý chủ quan trước các khoản chi phát sinh.",
+        "cards": [
+          {
+            "cardId": "the-devil",
+            "orientation": "reversed",
+            "position": "Quá khứ",
+            "interpretation": "Lá Ác Quỷ ngược ở vị trí Quá khứ cho thấy bạn đã bắt đầu nới lỏng hoặc tháo gỡ thói quen mua sắm cưỡng bức từng gây áp lực tài chính. Việc bạn chủ động dừng mua sắm theo hứng phù hợp với tín hiệu nhận ra khuôn mẫu phụ thuộc trước đây. Tuy vậy, việc nhận diện này mới giúp hạn chế phát sinh tổn hao mới chứ chưa thể loại bỏ ngay toàn bộ gánh nặng nợ nần đã tích lũy."
+          },
+          {
+            "cardId": "eight-of-swords",
+            "orientation": "reversed",
+            "position": "Hiện tại",
+            "interpretation": "Lá Tám Kiếm ngược ở vị trí Hiện tại thể hiện khả năng nhận ra các lựa chọn xử lý và bớt bị bó hẹp bởi cảm giác bế tắc. Việc bạn đang ghi lại các khoản nợ và trao đổi với người nhà phản ánh nỗ lực chủ động tìm giải pháp thay vì trốn tránh. Mặc dù vậy, các rào cản tài chính thực tế vẫn đòi hỏi bạn phải đối chiếu nguồn lực thực thay vì chỉ dựa vào sự nhẹ nhõm về tâm lý."
+          },
+          {
+            "cardId": "five-of-pentacles",
+            "orientation": "reversed",
+            "position": "Tương lai",
+            "interpretation": "Lá Năm Tiền ngược ở vị trí Tương lai mở ra khả năng từng bước phục hồi và tiếp cận sự trợ giúp từ người thân. Mức độ cải thiện thực tế sẽ phụ thuộc vào việc bạn có vượt qua sự e ngại để đón nhận sự hỗ trợ và quản lý dòng tiền tốt hay không. Khả năng ổn định chỉ có thể đạt được khi bạn duy trì kỷ luật quản lý tài chính đi kèm sự hỗ trợ đúng lúc."
+          }
+        ],
+        "connections": "Cả ba lá bài đều ở chiều ngược tạo nên tiến trình chuyển biến từ việc tháo gỡ thói quen cũ đến việc tìm kiếm giải pháp. Lá Ác Quỷ ngược ở Quá khứ thể hiện nỗ lực giảm bớt chi tiêu cảm tính, tạo cơ sở cho lá Tám Kiếm ngược ở Hiện tại mở rộng góc nhìn và tìm sự trợ giúp. Lá Năm Tiền ngược ở Tương lai cho thấy khả năng phục hồi nếu bạn kết nối được sự hỗ trợ từ gia đình với kế hoạch trả nợ thực tế.",
+        "love": null,
+        "career": null,
+        "finance": "Việc dừng chi tiêu ngẫu hứng và thống kê các khoản nợ giúp bạn chủ động hơn trong việc kiểm soát tài chính. Tuy nhiên, giai đoạn tiếp theo yêu cầu sự minh bạch về con số và việc tiếp nhận nguồn lực hỗ trợ một cách hiệu quả, tránh để cảm giác giải tỏa ban đầu làm giảm tính kỷ luật.",
+        "advice": "Bạn nên lập danh sách chi tiết các khoản nợ kèm mốc thời gian xử lý và trao đổi rõ ràng với người nhà về khả năng hỗ trợ thực tế. Đồng thời, duy trì việc ghi chép thu chi hàng ngày và xác định hạn mức chi tiêu cố định nhằm kiểm soát dòng tiền trong suốt quá trình phục hồi.",
+        "message": "Bạn có thể từng bước thoát khỏi vòng lặp nợ nần nhờ những thay đổi tích cực ở hiện tại. Mặc dù triển vọng phục hồi đang mở ra, bạn vẫn cần duy trì sự cẩn trọng và kỷ luật tài chính để không lặp lại thói quen chi tiêu cũ.",
+        "attention": "Bạn cần chú ý đến tâm lý e ngại khi nhận sự giúp đỡ từ người thân hoặc sự chủ quan khi thấy tình hình bớt áp lực. Việc thống kê nợ mới là bước đầu, bạn cần làm rõ điều kiện và phương thức hỗ trợ từ gia đình để tránh hiểu nhầm hoặc phát sinh chi tiêu ngoài dự kiến."
+      },
+      "error": null
+    },
+    {
+      "id": "love-same-card-different-context",
+      "request": {
+        "profile": {
+          "name": "Khách thử nghiệm",
+          "birthDate": "1993-05-14"
+        },
+        "question": "Chúng tôi sống chung, tôi vẫn làm việc nhà đều đặn nhưng hai người ít trò chuyện. Tôi nên thay đổi điều gì để quan hệ bớt xa cách?",
+        "topic": "love",
+        "spreadId": "single",
+        "cards": [
+          {
+            "cardId": "eight-of-pentacles",
+            "orientation": "reversed",
+            "position": "Thông điệp"
+          }
+        ]
+      },
+      "expectations": [
+        "Liên hệ sự máy móc với chăm sóc quan hệ và thiếu trò chuyện.",
+        "Không chép lời khuyên nâng tay nghề của ca công việc có cùng lá.",
+        "Không suy đoán người kia hết yêu hoặc có người khác."
+      ],
+      "analysis": {
+        "overview": "Để giảm bớt khoảng cách khi sống chung, bạn có thể thay đổi bằng cách chuyển sự chú ý từ việc hoàn thành việc nhà theo thói quen sang việc tạo không gian giao tiếp trực tiếp với đối phương. Lá Tám Tiền đảo ngược gợi ý rằng sự chăm sóc duy trì theo lối máy móc hoặc thiếu sự tập trung vào cảm xúc có thể khiến nhu cầu lắng nghe thực sự của cả hai bị lơ đi.",
+        "cards": [
+          {
+            "cardId": "eight-of-pentacles",
+            "orientation": "reversed",
+            "position": "Thông điệp",
+            "interpretation": "Lá Tám Tiền đảo ngược ở vị trí Thông điệp gợi ý khả năng mối quan hệ đang được duy trì theo thói quen máy móc hoặc thiếu sự tập trung vào nhu cầu thực tế của cả hai. Việc bạn đều đặn làm việc nhà thể hiện sự chu đáo, nhưng nếu chu trình sinh hoạt diễn ra như một nghĩa vụ lặp đi lặp lại mà ít có sự tương tác, mối liên kết tình cảm có thể bị hạn chế. Sự cầu toàn hoặc thói quen duy trì sinh hoạt một cách máy móc có thể làm bỏ qua việc trò chuyện trực tiếp để thấu hiểu nhau."
+          }
+        ],
+        "connections": "Lá Tám Tiền đảo ngược kết nối với hoàn cảnh của bạn bằng cách chỉ ra sự lệch hướng có thể có trong nỗ lực gắn kết. Công sức dồn vào các công việc nhà đều đặn nếu thực hiện theo thói quen sinh hoạt có thể khiến thời gian trò chuyện bị thu hẹp, tạo ra cảm giác xa cách dù ở chung một không gian.",
+        "love": "Trong chuyện tình cảm, việc duy trì sinh hoạt chung theo lối máy móc có thể khiến các nhu cầu chia sẻ thực sự bị bỏ quên. Dù việc nhà được hoàn thành đều đặn, sự thiếu hụt các cuộc đối thoại trực tiếp có thể làm gia tăng cảm giác xa rời. Việc dành thời gian lắng nghe thay vì chỉ tập trung vào công việc thường ngày có thể tạo cơ hội để hai người kết nối lại.",
+        "career": null,
+        "finance": null,
+        "advice": "Bạn có thể chủ động cân đối lại thời gian làm việc nhà để tạo những khoảng nghỉ chung trong ngày. Hãy bắt đầu bằng các câu hỏi thăm đơn giản về cảm xúc hoặc mong muốn của đối phương thay vì chỉ trao đổi các vấn đề sinh hoạt hằng ngày.",
+        "message": "Khoảng cách giữa hai người có thể được cải thiện nếu bạn chuyển từ việc duy trì sinh hoạt theo thói quen sang việc chủ động tạo ra những cuộc trò chuyện lắng nghe lẫn nhau.",
+        "attention": "Bạn nên chú ý tránh giả định rằng việc duy trì đều đặn việc nhà có thể thay thế cho việc giao tiếp. Cần tìm hiểu thêm xem đối phương đang gặp áp lực riêng hay có mong muốn trò chuyện ở thời điểm nào để điều chỉnh cách tiếp cận cho phù hợp."
+      },
+      "error": null
+    },
+    {
+      "id": "general-unclear",
+      "request": {
+        "profile": {
+          "name": "Khách thử nghiệm",
+          "birthDate": "1993-05-14"
+        },
+        "question": "Xem hành trình sắp tới của tôi.",
+        "topic": "general",
+        "spreadId": "single",
+        "cards": [
+          {
+            "cardId": "the-moon",
+            "orientation": "reversed",
+            "position": "Thông điệp"
+          }
+        ]
+      },
+      "expectations": [
+        "Giới hạn góc nhìn tổng quan vì chưa có lĩnh vực hoặc hoàn cảnh cụ thể.",
+        "Không tự bịa người yêu, công ty, khoản nợ hoặc biến cố.",
+        "Giữ cả khả năng thông tin rõ hơn và khả năng tiếp tục né tránh."
+      ],
+      "analysis": {
+        "overview": "Hành trình sắp tới chưa có bối cảnh cụ thể nên góc nhìn biểu tượng chỉ ra giai đoạn các sự mơ hồ có thể dần sáng tỏ hoặc nỗi lo vẫn đang bị né tránh. Việc thông tin dần xuất hiện sẽ giúp bạn đánh giá lại thực tế, tuy nhiên rủi ro nhận định lệch vẫn tồn tại nếu bạn chọn lẩn tránh các khúc mắc.",
+        "cards": [
+          {
+            "cardId": "the-moon",
+            "orientation": "reversed",
+            "position": "Thông điệp",
+            "interpretation": "Ở vị trí Thông điệp, lá bài Mặt Trăng ngược cho thấy hoàn cảnh của bạn đang có khả năng hé lộ những chi tiết từng bị che khuất. Nghĩa của lá bài phản ánh rằng áp lực bất an vẫn có thể kéo dài nếu bạn tiếp tục né tránh xử lý các băn khoăn. Việc chủ động nhận diện đúng bản chất sự việc và kiểm chứng chi tiết sẽ giúp giảm bớt sự hoang mang không cần thiết."
+          }
+        ],
+        "connections": "Trải bài một lá bài Mặt Trăng ở trạng thái ngược tập trung vào sự chuyển biến từ tình trạng mù mờ sang rõ ràng hơn. Sự liên hệ nằm ở chỗ thông tin thực tế chỉ phát huy tác dụng khi bạn chấp nhận làm rõ những nghi ngại thay vì đè nén chúng.",
+        "love": null,
+        "career": null,
+        "finance": null,
+        "advice": "Bạn nên làm rõ lĩnh vực hoặc lựa chọn bản thân đang cân nhắc trong thời gian tới. Sau đó, hãy liệt kê các điểm chưa rõ ràng và tìm kiếm thông tin xác minh hoặc trao đổi trực tiếp để có nền tảng quyết định vững chắc.",
+        "message": "Hành trình phía trước mở ra khả năng tháo gỡ các điều mơ hồ, nhưng mức độ rõ ràng phụ thuộc vào hành động đối diện với thực tế của bạn. Những nỗi lo chưa được làm rõ có thể tiếp tục gây ảnh hưởng nếu thiếu sự kiểm chứng.",
+        "attention": "Do câu hỏi chưa rõ bối cảnh về công việc, tài chính hay mối quan hệ, bạn cần tránh vội vàng áp đặt kết luận. Điều cần chú ý là xu hướng né tránh các vấn đề gây căng thẳng thay vì chủ động xác minh."
+      },
+      "error": null
+    }
+  ],
+  "rejectedAttempts": [
+    {
+      "id": "finance-risk",
+      "code": "FALSE_PROBABILITY",
+      "action": "Rejected; not returned to the customer. Re-ran with the same question and drawn cards."
+    }
+  ]
+}

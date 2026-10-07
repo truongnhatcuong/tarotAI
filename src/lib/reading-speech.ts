@@ -1,5 +1,6 @@
 import { getCard } from '@/data/tarot';
 import type { Reading } from '@/types/tarot';
+import { normalizeAnalysis } from './vietnamese-text';
 
 export function vietnameseVoices(voices: readonly SpeechSynthesisVoice[]): SpeechSynthesisVoice[] {
   const score = (voice: SpeechSynthesisVoice) => (/google/i.test(voice.name) ? 20 : 0) + (voice.default ? 5 : 0) + (voice.localService ? 1 : 0);
@@ -7,8 +8,8 @@ export function vietnameseVoices(voices: readonly SpeechSynthesisVoice[]): Speec
 }
 
 export function readingSpeechText(reading: Reading): string {
-  const analysis = reading.analysis;
-  if (!analysis) return '';
+  if (!reading.analysis) return '';
+  const analysis = normalizeAnalysis(reading.analysis);
   const sections = [analysis.overview, 'Phân tích từng lá.'];
   for (const card of analysis.cards) {
     sections.push(`${getCard(card.cardId).nameVi}, ${card.orientation === 'upright' ? 'lá xuôi' : 'lá ngược'}, vị trí ${card.position}.`, card.interpretation);

@@ -2,6 +2,8 @@ import {
   SYSTEM_PROMPT,
   buildUserPrompt,
   responseJsonSchema,
+  REVIEW_SYSTEM_PROMPT,
+  buildReviewPrompt,
 } from "@/lib/ai-prompt";
 import { analysisSchema } from "@/lib/validation";
 import type { Analysis, ReadingRequest } from "@/types/tarot";
@@ -39,6 +41,7 @@ async function callProvider(
   cfg: AIConfig,
   request: ReadingRequest,
   signal: AbortSignal,
+  prompt: { instructions: string; input: string },
 ): Promise<Response> {
   const post = (body: unknown) =>
     fetch(cfg.url, {
@@ -55,8 +58,8 @@ async function callProvider(
   if (cfg.mode === "responses") {
     return post({
       model: cfg.model,
-      instructions: SYSTEM_PROMPT,
-      input: buildUserPrompt(request),
+      instructions: prompt.instructions,
+      input: prompt.input,
       store: false,
       max_output_tokens: 4500,
       text: {
@@ -70,8 +73,8 @@ async function callProvider(
     });
   }
   const messages = [
-    { role: "system", content: SYSTEM_PROMPT },
-    { role: "user", content: buildUserPrompt(request) },
+    { role: "system", content: prompt.instructions },
+    { role: "user", content: prompt.input },
   ];
   const strict = await post({
     model: cfg.model,
@@ -92,7 +95,7 @@ async function callProvider(
     messages: [
       {
         role: "system",
-        content: `${SYSTEM_PROMPT}\n\nReturn ONLY a JSON object matching this JSON Schema:\n${JSON.stringify(schema)}`,
+        content: `${prompt.instructions}\n\nReturn ONLY a JSON object matching this JSON Schema:\n${JSON.stringify(schema)}`,
       },
       messages[1],
     ],
@@ -237,14 +240,31 @@ export async function analyzeWithAI(
       "Chưa kết nối dịch vụ AI. Bạn vẫn có thể đọc ý nghĩa chuẩn của trải bài bên dưới.",
       503,
     );
+  // Generation and editing share one deadline and the client's cancellation.
+  const signal = clientSignal
+    ? AbortSignal.any([clientSignal, AbortSignal.timeout(55000)])
+    : AbortSignal.timeout(55000);
+  const draft = await requestProviderAnalysis(cfg, request, signal, {
+    instructions: SYSTEM_PROMPT, input: buildUserPrompt(request),
+  });
+  return requestProviderAnalysis(cfg, request, signal, {
+    instructions: REVIEW_SYSTEM_PROMPT, input: buildReviewPrompt(request, draft),
+  });
+}
+
+async function requestProviderAnalysis(
+  cfg: AIConfig,
+  request: ReadingRequest,
+  signal: AbortSignal,
+  prompt: { instructions: string; input: string },
+): Promise<Analysis> {
   let response: Response;
   try {
     response = await callProvider(
       cfg,
       request,
-      clientSignal
-        ? AbortSignal.any([clientSignal, AbortSignal.timeout(55000)])
-        : AbortSignal.timeout(55000),
+      signal,
+      prompt,
     );
   } catch (error) {
     const cause = (error as { cause?: { code?: string; message?: string } })
